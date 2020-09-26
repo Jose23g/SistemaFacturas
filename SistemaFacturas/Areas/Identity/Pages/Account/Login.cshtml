@@ -1,0 +1,55 @@
+﻿@page
+@model LoginModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body rounded border border-secondary">
+                    <h5 class="card-title text-center">
+                        Iniciar sesión
+                        <br />
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ0QFhHYj4jk9srUBn_NkMtjHFL2AzLPcux-Q&usqp=CAU" width="90" height="90" alt="">
+                    </h5>
+                    <section>
+                        <form id="account" method="post">
+
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Input.Email">Correo</label>
+                                <input asp-for="Input.Email" class="form-control" />
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.Password">Contraseña</label>
+                                <input asp-for="Input.Password" class="form-control" />
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label asp-for="Input.RememberMe">
+                                        <input asp-for="Input.RememberMe" />
+                                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Ingresar</button>
+                            </div>
+                            <div class="form-group">
+                                <p>
+                                    <a id="forgot-password" asp-page="./ForgotPassword">Olvide mi contrseña?</a>
+                                </p>
+
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
