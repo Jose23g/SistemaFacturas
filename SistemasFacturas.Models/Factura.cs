@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace SistemasFacturas.Models
 {
     class Factura
     {
+        [Key]
         public int Cod_factura { get; set; }
         public DateTime FechaEision { get; set; }
         public string NombreComercial { get; set; }
