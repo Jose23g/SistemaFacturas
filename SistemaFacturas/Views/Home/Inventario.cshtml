@@ -1,0 +1,95 @@
+﻿@model IEnumerable<SistemasFacturas.Models.Producto>
+
+@{
+    ViewData["Title"] = "Inventario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col">
+        <h2>Lista de productos</h2>
+        <p>
+            <a asp-action="NuevoProducto">Añadir nuevo</a>
+        </p>
+    </div>
+
+    <div class="col">
+        <div class="container">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                    <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="Search">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Detalle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cod_categoria)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="Search">
+                <td>
+                    @item.Nombre
+                </td>
+                <td>
+                    @item.Detalle
+                </td>
+                <td>
+                    @item.Precio
+                </td>
+                <td>
+                    @item.Cod_categoria
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Cod_producto">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Cod_producto">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Cod_producto">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            function Contains(text_one, text_two) {
+                if (text_one.indexOf(text_two) != -1)
+                    return true;
+            }
+            $("#Search").keyup(function () {
+                var searchText = $("#Search").val().toLowerCase();
+                $(".Search").each(function () {
+                    if (!Contains($(this).text().toLowerCase(), searchText)) {
+                        $(this).hide;
+                    }
+                    else {
+                        $(this).show();
+                    }
+                })
+            });
+        });
+    </script>
+}

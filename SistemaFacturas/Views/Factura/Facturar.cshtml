@@ -1,0 +1,124 @@
+﻿@model SistemasFacturas.Models.Facturar
+@{
+    ViewData["Title"] = "Facturar";
+    var fecha = ViewData["categorias"];
+    var tipoDocu = (List<SistemasFacturas.Models.MedotoPago>)ViewData["tipoPago"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Venta</h2>
+
+<form asp-action="Facturar">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-6 col-md-4">
+                <label>Sucursal</label>
+                <br />
+                <input type="text" asp-for="factura.NombreComercial" class="form-control" value="Facturacion RESEB" readonly>
+            </div>
+            <div class="col-6 col-md-4">
+                <label>Tipo de documento</label>
+                <br />
+                <input asp-for=factura.Cod_factura class="form-control" />
+            </div>
+            <div class="col-6 col-md-4">
+                <label>Fecha</label>
+                <br />
+                <input asp-for="factura.FechaEmision" value=@DateTime.Now class="form-control" />
+            </div>
+            <div class="w-100"></div>
+            <div class="col-6 col-md-4">
+                <label>Cliente</label>
+                <br />
+                <input type="text" class="form-control">
+            </div>
+            <div class="col-6 col-md-4">
+                <label>Forma de Pago</label>
+                <br />
+                <select class="form-control" asp-for="factura.Cod_metodo" asp-items='new SelectList(tipoDocu,"Cod_metodo", "Metodo_de_pago")'>
+                </select>
+            </div>
+            <div class="col-6 col-md-4">
+                <label>Vendedor</label>
+                <br />
+                <input type="text" id="exampleForm2" class="form-control">
+
+            </div>
+        </div>
+    </div>
+</form>
+
+<br />
+<HR>
+
+<div class="container">
+    <div class="row justify-content-between">
+        <div class="col-4">
+            <div class="input-group md-form form-sm form-2 pl-0">
+                <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <span class="input-group-text red lighten-3" id="basic-text1">
+                        <i class="fas fa-search text-grey"
+                           aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="row justify-content-between">
+    <div class="col-sm-8">
+        <table class="table card-title text-center">
+            <thead>
+                <tr>
+                    <th>
+                        Codigo.
+                    </th>
+                    <th>
+                        Cant.
+                    </th>
+                    <th>
+                        Descripcion.
+                    </th>
+                    <th>
+                        Precio Unit.
+                    </th>
+                    <th>
+                        Descuento.
+                    </th>
+                    <th>
+                        Precio Total.
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+        </table>
+    </div>
+    <div class="col-4">
+        <div class="col-md-auto align-content-end">
+            <div class="col-sm-10 col-md-10 col-lg-10 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body rounded border border-secondary">
+                        <h5 class="card-title text-center">Total a pagar</h5>
+                        <input type="text" id="exampleForm2" class="form-control">
+                        <br />
+                        <h5 class="card-title text-center">Total recibido</h5>
+                        <input type="text" id="exampleForm2" class="form-control">
+                        <br />
+                        <h5 class="card-title text-center">Cambio</h5>
+                        <input type="text" id="exampleForm2" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <input type="submit" value="Facturar" class="btn btn-primary" />
+</div>
+

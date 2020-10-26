@@ -5,10 +5,10 @@ using System.Text;
 
 namespace SistemasFacturas.Models
 {
-    class Categoria
+   public class Categorias
     {
         [Key]
         public int Cod_categoria { get; set; }
-        public string Categorias { get; set; }
+        public string Categoria { get; set; }
     }
 }

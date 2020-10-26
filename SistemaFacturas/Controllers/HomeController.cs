@@ -1,18 +1,22 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using SistemaFacturas.Models;
-using System.Diagnostics;
+using SistemaFacturas.BL;
+using SistemasFacturas.Models;
 
 namespace SistemaFacturas.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IRepositorioDeProductos repositorioDeProductos;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IRepositorioDeProductos repositorio)
         {
-            _logger = logger;
+            repositorioDeProductos = repositorio;
         }
 
         public IActionResult Index()
@@ -20,21 +24,42 @@ namespace SistemaFacturas.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public ActionResult Inventario()
         {
+            List<Producto> laListaDeProductos;
+            laListaDeProductos = repositorioDeProductos.ListaDeProductos();
+            return View(laListaDeProductos);
+        }
+
+        // GET: HomeController1/Create
+        public ActionResult NuevoProducto()
+        {
+            ViewData["categorias"] = repositorioDeProductos.ListaDeCategoria();
             return View();
         }
 
-        [Authorize]
+        // POST: HomeController1/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NuevoProducto(Producto producto)
+        {
+            try
+            {
+                repositorioDeProductos.AgregarProductos(producto);
+                return RedirectToAction(nameof(Menu));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [Authorize(Roles ="Recursos Humanos")]
         public IActionResult Menu()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+     
     }
 }

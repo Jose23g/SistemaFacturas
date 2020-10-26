@@ -15,12 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SistemaFacturas.BL\SistemaFacturas.BL.csproj" />
     <ProjectReference Include="..\SistemaFacturas.DA\SistemaFacturas.DA.csproj" />
     <ProjectReference Include="..\SistemasFacturas.Models\SistemasFacturas.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\NewFolder\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

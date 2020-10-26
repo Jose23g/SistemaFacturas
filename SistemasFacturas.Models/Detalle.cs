@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SistemasFacturas.Models
 {
-    class Detalle
+    public class Detalle
     {
         [Key]
         public int Cod_detalle { get; set; }

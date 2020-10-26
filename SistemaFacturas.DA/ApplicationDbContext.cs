@@ -8,6 +8,9 @@ namespace SistemaFacturas.DA
     {
 
         public DbSet<Persona> Persona { get; set; }
+        public DbSet<Producto> Producto { get; set; }
+        public DbSet<Categorias> Categoria { get; set; }
+        public DbSet<MedotoPago> MetodoPago { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

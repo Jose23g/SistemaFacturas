@@ -1,0 +1,50 @@
+﻿@model SistemasFacturas.Models.Producto
+
+@{
+    ViewData["Title"] = "NuevoProducto";
+    var categoria = (List<SistemasFacturas.Models.Categorias>)ViewData["categorias"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Nuevo Producto</h1>
+
+<h4>Producto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="NuevoProducto">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Detalle" class="control-label"></label>
+                <input asp-for="Detalle" class="form-control" />
+                <span asp-validation-for="Detalle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Precio" class="control-label"></label>
+                <input asp-for="Precio" class="form-control" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cod_categoria"></label>
+                <select asp-for="Cod_categoria" class="form-control" asp-items='new SelectList(categoria,"Cod_categoria", "Categoria")'>
+                   
+                </select>
+                <span asp-validation-for="Cod_categoria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Añadir" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Inventario">Regresar</a>
+</div>
+
