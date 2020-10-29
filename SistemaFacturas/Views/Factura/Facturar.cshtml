@@ -1,9 +1,10 @@
-﻿@model Tuple<SistemasFacturas.Models.Factura,SistemasFacturas.Models.Detalle>
+﻿@model Tuple<SistemasFacturas.Models.Factura, SistemasFacturas.Models.Detalle>
 
 @{
     ViewData["Title"] = "Facturar";
     var fecha = ViewData["categorias"];
     var tipoDocu = (List<SistemasFacturas.Models.MedotoPago>)ViewData["tipoPago"];
+    List<SistemasFacturas.Models.Producto> producto = (List<SistemasFacturas.Models.Producto>)ViewData["lisProducto"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -52,28 +53,39 @@
         </div>
     </form>
 </div>
-
-
-<br />
+<div class="col-auto">
+    <button class="btn btn-secondary" type="button"
+            data-target="#modalProducto" data-toggle="modal"
+            data-backdrop="static" data-keyboard="false">
+        <span class="glyphicon glyphicon-user"> Agregar Producto</span>
+    </button>
+</div>
 <HR>
-<form>
-    <div class="input-group mb-3">
-        <input type="text" id="postTitle" placeholder="Buscar" class="btn btn-outline-primary" aria-label="" aria-describedby="basic-addon1" />
-        <div class="input-group-append">
-            <button class="btn btn-outline-primary" type="button">Button</button>
-        </div>
-    </div>
-</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Codigo
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Detalle
+            </th>
+            <th>
+                Precio
+            </th>
+            <th>
+                Cantidad
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tabla_atr">
 
-<form asp-action="SetDetalle" asp-controller="Facturar">
-    <div class="row">
-        <div class="form-group col-md-4">
-            <label>Producto</label>
-            <select asp-items="@(new SelectList(ViewBag.Productos, "Cod_producto", "Nombre"))"></select>
-        </div>
-    </div>
-</form>
-
+    </tbody>       
+</table>
 <div class="row justify-content-between">
     <div class="col-4">
         <div class="col-md-auto align-content-end">
@@ -99,15 +111,4 @@
     <input type="submit" value="Facturar" class="btn btn-primary" />
 </div>
 
-@section Scripts
-{
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code/jquery.com/ui/1.12.1/jquery-ui,js"></script>
-<script>
-    $(document).ready(function () {
-        $('#postTitle').autocomplete({
-            source: 'api/PostController/Buscar'
-        });
-    });
-</script>
-}
+<partial name="_ModalProductos" />

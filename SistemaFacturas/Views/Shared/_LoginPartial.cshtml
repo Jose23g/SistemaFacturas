@@ -6,8 +6,7 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        @if(User.IsInRole("Recursos Humanos"))
-        {
+        
              <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hola @User.Identity.Name!</a>
         </li>
@@ -22,11 +21,6 @@
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Index" asp-action="Roles"></a>
         </li>
-        }
-        else
-        {
-
-        }
        
     }
     else

@@ -50,7 +50,7 @@ namespace SistemaFacturas.Controllers
             }
         }
 
-        [Authorize(Roles ="Recursos Humanos")]
+        [Authorize]
         public IActionResult Menu()
         {
             return View();

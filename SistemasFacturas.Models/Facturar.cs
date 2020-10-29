@@ -8,6 +8,6 @@ namespace SistemasFacturas.Models
 
         public List<Detalle> Detalle { get; set; }
 
- 
+        
     }
 }

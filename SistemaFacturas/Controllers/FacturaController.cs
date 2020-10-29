@@ -19,6 +19,7 @@ namespace SistemaFacturas.Controllers
         private readonly ApplicationDbContext contexto;
         Response res = new Response();
         UserManager<IdentityUser> _userManager;
+        List<Producto> productos = new List<Producto>();
 
         public FacturaController(IRepositorioFactura repositorio, UserManager<IdentityUser> userManager, IRepositorioDeProductos repositorioDeProductos, ApplicationDbContext context)
         {
@@ -36,42 +37,18 @@ namespace SistemaFacturas.Controllers
             ViewBag.Productos = await contexto.Producto.Select(x=> new {x.Cod_producto, x.Nombre}).ToListAsync();
             
             Tuple<Factura, Detalle> model = new Tuple<Factura, Detalle>(new Factura(), new Detalle());
-
+            ViewData["lisProducto"] = productos;
+           
             return View(model);
         }
 
-        public async Task<IActionResult> SetEncabezado([Bind(Prefix ="Item1")] Factura factura)
-        {
-            if (!ModelState.IsValid)
-            {
-                res.estado = false;
-                res.mensaje = "Rellenar todos los datos";
-                return Json(res);
-            }
-            contexto.Factura.Add(factura);
-            await contexto.SaveChangesAsync();
-            res.resultado = factura.Cod_factura;
-            res.estado = true;
-            return Json(res);
-        }
-
-
+       
         // GET: HomeController1/Create
         public ActionResult NuevaFactura()
         {
             ViewData["tipoPago"] = repositorioFactura.MetodoPagos();
             Facturar facturar = new Facturar();
             return View(facturar);
-        }
-
-        public async Task<int> Total()
-        {
-            int total = 0;
-            foreach (var item in detalles)
-            {
-                total = total + item.Cantidad;
-            }
-            return total;
         }
 
         // POST: HomeController1/Create
@@ -101,46 +78,61 @@ namespace SistemaFacturas.Controllers
         private static List<string> l_indices = new List<string>();
         private static List<Detalle> detalles = new List<Detalle>();
         private static List<string> l_alumnos = new List<string>();
+       
+
+        public JsonResult buscar(string dato_bus, int cantidad)
+        {
+            var producto = new List<Producto>();
+            producto = repositorioFactura.bus_atr(dato_bus, cantidad);
+
+            return Json(producto);
+        }
+
+
         //--------busqueda de alumno
         [HttpPost]
         public String bus_atr(string dato_bus, int cantidad)
         {
             string res = "";
             var producto = new List<Producto>();
-            producto = repositorioFactura.bus_atr(dato_bus);
+            producto = repositorioFactura.bus_atr(dato_bus, cantidad);
             
 
 
             foreach (var a in producto)
             {
-                if (repositorioFactura.Disponible(cantidad) == true)
+                int codProducto = a.Cod_producto;
+                string nombreProducto = a.Nombre;
+                string detalleProducto = a.Detalle;
+                int precioProducto = (int)a.Precio;
+                int disponibles = a.Cantidad;
+                int Cantidad = cantidad;
+               
+                if (repositorioFactura.Disponible(codProducto, cantidad) >= cantidad)
                 {
-                    int codProducto = a.Cod_producto;
-                    string nombreProducto = a.Nombre;
-                    string detalleProducto = a.Detalle;
-                    int precioProducto = (int)a.Precio;
-                    int Cantidad = cantidad;
+                   
                     string boton_sel = "<button class=\"btn btn-warning\" type='button'"
                         + " onclick=\"agr_atr('" + codProducto + "','" + nombreProducto + "','" + detalleProducto + "','" + precioProducto + "','" + Cantidad + "')\""
                         + " data-dismiss='modal'><span class=\"glyphicon glyphicon-check\"> Añadir</span></button>";
                     res = res +
-                        "<tr><td>" + codProducto + "</td>"
+                        "<tr>" 
+                        +"<td>" + codProducto + "</td>"
                         + "<td>" + nombreProducto + "</td>"
                         + "<td>" + detalleProducto + "</td>"
                         + "<td>" + precioProducto + "</td>"
-                        + "<td>" + precioProducto + "</td>"
+                        + "<td>" + disponibles + "</td>"
                         + "<td>" + boton_sel + "</td></tr>";
                 }
                 else
                 {
                     string boton_sel = "<button><span class=\"glyphicon glyphicon-check\"> No disponible</span></button>";
                     res = res +
-                        "<tr>" 
-                        +"<td> - </td>"
-                        + "<td> - </td>"
-                        + "<td> - </td>"
-                        + "<td> - </td>"
-                        + "<td> - </td>"
+                        "<tr>"
+                        + "<td>" + codProducto + "</td>"
+                        + "<td>" + nombreProducto + "</td>"
+                        + "<td>" + detalleProducto + "</td>"
+                        + "<td>" + precioProducto + "</td>"
+                        + "<td>" + disponibles + "</td>"
                         + "<td>" + boton_sel + "</td></tr>";
                 }
 
@@ -148,6 +140,7 @@ namespace SistemaFacturas.Controllers
             }
             return res;
         }
+        
         //------------Agregar Alumno 
         public String agr_atr(string codProducto, string nombreProducto, string detalleProducto, string precioProducto, int Cantidad)
         {
@@ -176,7 +169,7 @@ namespace SistemaFacturas.Controllers
                         + "<td>" + nombreProducto + "</td>"
                         + "<td>" + detalleProducto + "</td>"
                         + "<td>" + precioProducto + "</td>"
-                        + "<td>" + Cantidad + "</td></tr>"
+                        + "<td>" + Cantidad + "</td>"
                         + "<td>" + boton_bor + "</td></tr>"
                         );
                     l_indices.Add(codProducto);
@@ -197,6 +190,7 @@ namespace SistemaFacturas.Controllers
             l_alumnos.Clear();
             l_indices.Clear();
         }
+        
         //-------------- Borrar Alumno de Lista -----------
         public String bor_atr(string id)
         {
