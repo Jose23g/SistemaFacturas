@@ -1,0 +1,40 @@
+﻿@model IEnumerable<SistemasFacturas.Models.Usuarios>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista Usuarios</h1>
+
+<p>
+    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Nuevo Usuario</a>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Roles)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Roles)
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>
