@@ -81,7 +81,14 @@ namespace SistemaFacturas.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
                     //return LocalRedirect(returnUrl);
-                    return RedirectToAction("Menu", "Home");
+                    if (User.IsInRole("Administrador"))
+                    {
+                        return RedirectToAction("Menu", "Home");
+                    }
+                    else
+                    {
+                        return RedirectToAction("MenuEncargado", "Home");
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {
