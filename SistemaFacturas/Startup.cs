@@ -31,7 +31,8 @@ namespace SistemaFacturas
            
             services.AddScoped<IRepositorioDeProductos, RepositorioDeProducto>();
             services.AddScoped<IRepositorioFactura, RepositorioFactura>();
-            
+            services.AddScoped<IRepositorioUsuarios, RepositorioUsuarios>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
