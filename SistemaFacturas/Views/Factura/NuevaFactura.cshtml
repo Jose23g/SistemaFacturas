@@ -1,0 +1,120 @@
+﻿@model SistemasFacturas.Models.Facturar
+
+@{
+    ViewData["Title"] = "NuevaFactura";
+    var medotoPagos = (List<SistemasFacturas.Models.MedotoPago>)ViewData["tipoPago"];
+    var total = ViewData["total"];
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+
+    <div class="col-auto mr-auto">
+        <h4>Compra</h4>
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-secondary" type="button"
+                data-target="#modalProducto" data-toggle="modal"
+                data-backdrop="static" data-keyboard="false">
+            <span class="glyphicon glyphicon-user"> Agregar Producto</span>
+        </button>
+    </div>
+</div>
+<hr />
+<form asp-action="NuevaFactura">
+    <div class="row">
+
+        <div class="col-md-4">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Factura.NombreComercial" class="control-label"></label>
+                <input asp-for="Factura.NombreComercial" class="form-control" value="Facturacion RESEB" readonly />
+                <span asp-validation-for="Factura.NombreComercial" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Factura.Identificacion" class="control-label"></label>
+                <input asp-for="Factura.Identificacion" class="form-control" />
+                <span asp-validation-for="Factura.Identificacion" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Factura.FechaEmision" class="control-label"></label>
+                <input asp-for="Factura.FechaEmision" class="form-control" />
+                <span asp-validation-for="Factura.FechaEmision" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Factura.Cod_metodo" class="control-label"></label>
+                <select class="form-control" asp-for="Factura.Cod_metodo" asp-items='new SelectList(medotoPagos,"Cod_metodo", "Metodo_de_pago")'></select>
+                <span asp-validation-for="Factura.Cod_metodo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Factura.NumeroFactura" class="control-label"></label>
+                <input asp-for="Factura.NumeroFactura" class="form-control" />
+                <span asp-validation-for="Factura.NumeroFactura" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Factura.Monto_total" class="control-label"></label>
+                <input asp-for="Factura.Monto_total" class="form-control" id="total"/>
+                <span asp-validation-for="Factura.Monto_total" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="Factura.Subtotal" class="control-label"></label>
+                <input asp-for="Factura.Subtotal" class="form-control" />
+                <span asp-validation-for="Factura.Subtotal" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="col-sm-8">
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th>
+                            Codigo Producto
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Detalle
+                        </th>
+                        <th>
+                            Precio
+                        </th>
+                        <th>
+                            Cantidad
+                        </th>
+                        <th>
+                            Accion
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="tabla_atr"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+
+
+<div>
+    <a asp-action="Index">Regresar</a>
+</div>
+
+@Html.Partial("_ModalProductos")
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

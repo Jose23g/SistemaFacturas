@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SistemaFacturas.BL;
 using SistemasFacturas.Models;
+using System.Collections.Generic;
 
 namespace SistemaFacturas.Controllers
 {
@@ -54,12 +50,12 @@ namespace SistemaFacturas.Controllers
             }
         }
 
-        [Authorize(Roles ="Recursos Humanos")]
+        [Authorize]
         public IActionResult Menu()
         {
             return View();
         }
 
-     
+
     }
 }

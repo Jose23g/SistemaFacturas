@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaFacturas", "SistemaFacturas\SistemaFacturas.csproj", "{98FAA696-63A0-49C3-AE45-7D0A31DA893D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaFacturas", "SistemaFacturas\SistemaFacturas.csproj", "{98FAA696-63A0-49C3-AE45-7D0A31DA893D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemasFacturas.Models", "SistemasFacturas.Models\SistemasFacturas.Models.csproj", "{88CA9D61-A2A3-4524-96A7-EC37F65688F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemasFacturas.Models", "SistemasFacturas.Models\SistemasFacturas.Models.csproj", "{88CA9D61-A2A3-4524-96A7-EC37F65688F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaFacturas.BL", "SistemaFacturas.BL\SistemaFacturas.BL.csproj", "{68FA7D15-E30C-4A09-B738-82B926FD022B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaFacturas.BL", "SistemaFacturas.BL\SistemaFacturas.BL.csproj", "{68FA7D15-E30C-4A09-B738-82B926FD022B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaFacturas.DA", "SistemaFacturas.DA\SistemaFacturas.DA.csproj", "{5C29A4EB-8481-4FCE-A5F7-E25FCF40A670}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaFacturas.DA", "SistemaFacturas.DA\SistemaFacturas.DA.csproj", "{5C29A4EB-8481-4FCE-A5F7-E25FCF40A670}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

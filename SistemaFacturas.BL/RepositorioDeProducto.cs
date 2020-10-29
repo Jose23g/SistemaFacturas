@@ -3,11 +3,10 @@ using SistemasFacturas.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SistemaFacturas.BL
 {
-   public class RepositorioDeProducto : IRepositorioDeProductos
+    public class RepositorioDeProducto : IRepositorioDeProductos
     {
         private ApplicationDbContext ContextoBaseDeDatos;
         public RepositorioDeProducto(ApplicationDbContext contexto)
@@ -45,6 +44,13 @@ namespace SistemaFacturas.BL
         public void ModificarProducto(Producto producto)
         {
             throw new NotImplementedException();
+        }
+
+       public List<Producto> BuscarProducto(string nombre)
+        {
+            var producto = new List<Producto>();
+            producto = ContextoBaseDeDatos.Producto.Where(x => x.Nombre.Contains(nombre)).ToList();
+            return producto;
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SistemasFacturas.Models
 {
@@ -12,6 +9,7 @@ namespace SistemasFacturas.Models
         public int Cod_producto { get; set; }
         public int Cod_Factura { get; set; }
         public int Cantidad { get; set; }
+       
 
     }
 }

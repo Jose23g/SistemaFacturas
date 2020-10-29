@@ -1,15 +1,15 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SistemaFacturas.DA;
 using SistemasFacturas.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SistemaFacturas.BL
 {
-   public class RepositorioFactura: IRepositorioFactura
+    public class RepositorioFactura : IRepositorioFactura
     {
         private ApplicationDbContext ContextoBaseDeDatos;
         public RepositorioFactura(ApplicationDbContext contexto)
@@ -17,9 +17,14 @@ namespace SistemaFacturas.BL
             ContextoBaseDeDatos = contexto;
         }
 
-        public void AgregarFactura()
+        public void AgregarFactura(Facturar facturar, List<string> codigos)
         {
-            throw new NotImplementedException();
+            Factura factura = new Factura();
+            Producto producto = new Producto();
+            Detalle detalle = new Detalle();
+
+            facturar.Factura = factura;
+            
         }
 
         public List<MedotoPago> MetodoPagos()
@@ -31,30 +36,51 @@ namespace SistemaFacturas.BL
 
         public void obtenerUsuario(UserManager<IdentityUser> userManager)
         {
-            
-           
+
+
         }
 
-        public Facturar postFactura()
+        public void setEncabezado(Factura factura)
         {
-            Facturar factura = new Facturar();
+            ContextoBaseDeDatos.Factura.Add(factura);
+            ContextoBaseDeDatos.SaveChanges();
+        }
+
+        // Busqueda de Producto
+        public List<Producto> bus_atr(string dato_bus)
+        {
+            var autores = new List<Producto>();
+            
             try
             {
-              
-                return factura;
-            }
-            catch(Exception ex)
-            {
-                return factura;
-            }
-           
-        }
+                autores = (from c in ContextoBaseDeDatos.Producto
+                           where c.Nombre == dato_bus
+                           select c).ToList();
 
-        public List<string> buscar(string term)
+               
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return autores;
+        }
+        public bool Disponible(int codProducto)
         {
-             var posttible = ContextoBaseDeDatos.Producto.Where(p => p.Nombre.Contains(term))
-                .Select(p => p.Nombre).ToList();
-            return posttible;
+            bool disponible= false;
+            Inventario inventario = new Inventario();
+
+            inventario = ContextoBaseDeDatos.Inventario.Where(x => x.Cod_producto.Equals(codProducto)).FirstOrDefault();
+            if(inventario.Cantidad > 1)
+            {
+                disponible = true;
+            }
+            else
+            {
+                disponible = false;
+            }
+
+            return disponible;
         }
     }
 }
