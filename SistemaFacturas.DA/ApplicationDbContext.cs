@@ -9,6 +9,8 @@ namespace SistemaFacturas.DA
 
         public DbSet<Persona> Persona { get; set; }
         public DbSet<Producto> Producto { get; set; }
+        public DbSet<Factura> Factura { get; set; }
+        public DbSet<Inventario> Inventario { get; set; }
         public DbSet<Categorias> Categoria { get; set; }
         public DbSet<MedotoPago> MetodoPago { get; set; }
         public DbSet<Usuarios> Usuarios { get; set; }
