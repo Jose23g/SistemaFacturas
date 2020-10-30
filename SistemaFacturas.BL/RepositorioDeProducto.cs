@@ -41,16 +41,35 @@ namespace SistemaFacturas.BL
             return listaProducto;
         }
 
-        public void ModificarProducto(Producto producto)
-        {
-            throw new NotImplementedException();
-        }
-
        public List<Producto> BuscarProducto(string nombre)
         {
             var producto = new List<Producto>();
             producto = ContextoBaseDeDatos.Producto.Where(x => x.Nombre.Contains(nombre)).ToList();
             return producto;
+        }
+
+     
+
+       
+
+        public Producto ObtenerProductoPorId(int id)
+        {
+            Producto ProductoEncontrado;
+            ProductoEncontrado = ContextoBaseDeDatos.Producto.Find(id);
+            return ProductoEncontrado;
+        }
+
+        public void ModificarProducto(Producto producto)
+        {
+            Producto productoPorActualizar;
+            productoPorActualizar = ObtenerProductoPorId(producto.Cod_producto);
+            productoPorActualizar.Nombre = producto.Nombre;
+            productoPorActualizar.Detalle = producto.Detalle;
+            productoPorActualizar.Precio = producto.Precio;
+            productoPorActualizar.Cod_categoria = producto.Cod_categoria;
+            productoPorActualizar.Cantidad = producto.Cantidad;
+            ContextoBaseDeDatos.Producto.Update(productoPorActualizar);
+            ContextoBaseDeDatos.SaveChanges();
         }
     }
 }

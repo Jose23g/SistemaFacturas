@@ -11,5 +11,7 @@ namespace SistemaFacturas.BL
         void DetalleDeProducto(int ID);
         void ModificarProducto(Producto producto);
         public List<Producto> BuscarProducto(string nombre);
+
+        Producto ObtenerProductoPorId(int id);
     }
 }

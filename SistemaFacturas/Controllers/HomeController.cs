@@ -54,6 +54,35 @@ namespace SistemaFacturas.Controllers
             }
         }
 
+        public ActionResult ModificarProducto(int id)
+        {
+            Producto productoPorEditar;
+            productoPorEditar = repositorioDeProductos.ObtenerProductoPorId(id);
+            return View(productoPorEditar);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ModificarProducto (Producto producto)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    repositorioDeProductos.ModificarProducto(producto);
+                    return RedirectToAction(nameof(Inventario));
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         [Authorize(Roles ="Administrador")]
         public IActionResult Menu()
         {
