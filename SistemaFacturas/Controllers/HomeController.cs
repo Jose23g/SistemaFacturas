@@ -46,9 +46,9 @@ namespace SistemaFacturas.Controllers
             try
             {
                 repositorioDeProductos.AgregarProductos(producto);
-                return RedirectToAction(nameof(Menu));
+                return RedirectToAction(nameof(Inventario));
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
@@ -60,6 +60,7 @@ namespace SistemaFacturas.Controllers
             productoPorEditar = repositorioDeProductos.ObtenerProductoPorId(id);
             return View(productoPorEditar);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -82,6 +83,9 @@ namespace SistemaFacturas.Controllers
                 return View();
             }
         }
+
+      
+       
 
         [Authorize(Roles ="Administrador")]
         public IActionResult Menu()

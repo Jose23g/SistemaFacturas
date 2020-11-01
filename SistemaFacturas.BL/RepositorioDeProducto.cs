@@ -16,10 +16,24 @@ namespace SistemaFacturas.BL
 
         public void AgregarProductos(Producto producto)
         {
-            ContextoBaseDeDatos.Producto.Add(producto);
+
+            Producto nuevoproducto = producto;
+            nuevoproducto.Cod_producto = producto.Cod_producto;
+            nuevoproducto.Cantidad = producto.Cantidad;
+
+            ContextoBaseDeDatos.Producto.Add(nuevoproducto);
+            ContextoBaseDeDatos.SaveChanges();
+
+            AgregarInventario(nuevoproducto.Cod_producto, nuevoproducto.Cantidad);
+        }
+     public void AgregarInventario(int codP, int cantidad)
+            {
+            Inventario inventario = new Inventario();
+            inventario.Cod_producto = codP;
+            inventario.Cantidad = cantidad;
+            ContextoBaseDeDatos.Inventario.Add(inventario);
             ContextoBaseDeDatos.SaveChanges();
         }
-
         public void DetalleDeProducto(int ID)
         {
             throw new NotImplementedException();
@@ -35,8 +49,24 @@ namespace SistemaFacturas.BL
 
         public List<Producto> ListaDeProductos()
         {
+            List<Inventario> Listainventarios;
+            Listainventarios = ContextoBaseDeDatos.Inventario.ToList();
+
             List<Producto> listaProducto;
             listaProducto = ContextoBaseDeDatos.Producto.ToList();
+
+           foreach (var item in listaProducto)
+            {
+                foreach (var inventario in Listainventarios)
+                {
+                    if (item.Cod_producto == inventario.Cod_producto)
+                    {
+                        item.Cantidad = inventario.Cantidad;
+                    }
+
+                }
+
+                                }
 
             return listaProducto;
         }
@@ -47,10 +77,6 @@ namespace SistemaFacturas.BL
             producto = ContextoBaseDeDatos.Producto.Where(x => x.Nombre.Contains(nombre)).ToList();
             return producto;
         }
-
-     
-
-       
 
         public Producto ObtenerProductoPorId(int id)
         {
@@ -71,5 +97,9 @@ namespace SistemaFacturas.BL
             ContextoBaseDeDatos.Producto.Update(productoPorActualizar);
             ContextoBaseDeDatos.SaveChanges();
         }
+
+       
+
+
     }
 }
