@@ -97,11 +97,17 @@ namespace SistemaFacturas.Controllers
             listaClientes = repositorioFactura.ListaClientes();
             return View(listaClientes);
         }
+        public ActionResult NuevoCliente()
+        {
+           
+            return View();
+        }
+
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AgregarCliente(Persona cliente)
+        public ActionResult NuevoCliente(Persona cliente)
         {
             try
             {
