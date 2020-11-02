@@ -93,14 +93,47 @@ namespace SistemaFacturas.Controllers
                 return View();
             }
         }
+        public ActionResult ListaClientes()
+        {
+            List<Persona> listaClientes;
+            listaClientes = repositorioFactura.ListaClientes();
+            return View(listaClientes);
+        }
+       
+        public ActionResult NuevoCliente()
+        {
+            
+                ViewData["tipoIdentificacion"] = repositorioFactura.TipoIdentificacion();
+                return View();
+            
 
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NuevoCliente(Persona cliente)
+        {
+            try
+            {
+                repositorioFactura.AgregarCliente(cliente);
+                return RedirectToAction(nameof(ListaClientes));
+            }
+            catch
+            {
+                return View();
+            }
+        }
         // GET: HomeController1/Create
         public ActionResult Lista()
         {
             ViewData["tipoPago"] = repositorioFactura.MetodoPagos();
             return View();
         }
+       
 
+            
 
         private static List<string> l_indices = new List<string>();
         private static List<Detalle> detalles = new List<Detalle>();

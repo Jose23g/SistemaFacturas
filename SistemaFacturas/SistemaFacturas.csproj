@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="C:\Users\adria\Desktop\Facturar.cshtml" Link="Facturar.cshtml" />
     <Content Include="Controllers\favicon.ico" />
   </ItemGroup>
 

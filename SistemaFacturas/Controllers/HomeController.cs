@@ -86,7 +86,10 @@ namespace SistemaFacturas.Controllers
         {
             return View();
         }
-
-
+        
+        public IActionResult MenuEncargado()
+        {
+            return View();
+        }
     }
 }
