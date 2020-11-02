@@ -167,7 +167,7 @@ namespace SistemaFacturas.Controllers
         public JsonResult agregar(string codProducto, string nombreProducto, string detalleProducto, string precioProducto, int cantidad, int cantidadSelecionada)
         {
             Detalle detalle = new Detalle();
-            Producto producto = repositorioDeProductos1.ObtenerProducto(int.Parse(codProducto));
+            Producto producto = repositorioDeProductos1.ObtenerProductoPorId(int.Parse(codProducto));
             
             producto.CantidadSelecionada = cantidadSelecionada;
             detalle.Cod_producto = int.Parse(codProducto);

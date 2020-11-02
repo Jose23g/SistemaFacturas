@@ -35,7 +35,7 @@ namespace SistemaFacturas.BL
             ContextoBaseDeDatos.SaveChanges();
         }
 
-        public void DetalleDeProducto(int ID)
+        public Producto DetalleDeProducto(int ID)
         {
             var producto = ContextoBaseDeDatos.Producto.Find(ID);
             return producto;
@@ -59,7 +59,7 @@ namespace SistemaFacturas.BL
             listaProducto = ContextoBaseDeDatos.Producto.ToList();
 
            foreach (var item in listaProducto)
-            {
+            { 
                 foreach (var inventario in Listainventarios)
                 {
                     if (item.Cod_producto == inventario.Cod_producto)
@@ -68,8 +68,7 @@ namespace SistemaFacturas.BL
                     }
 
                 }
-
-                                }
+            }
 
             return listaProducto;
         }
@@ -79,6 +78,53 @@ namespace SistemaFacturas.BL
             var producto = new List<Producto>();
             producto = ContextoBaseDeDatos.Producto.Where(x => x.Nombre.Contains(nombre)).ToList();
             return producto;
+        }
+
+        public Producto ObtenerProductoPorId(int id)
+        {
+            Producto ProductoEncontrado;
+            ProductoEncontrado = ContextoBaseDeDatos.Producto.Find(id);
+            return ProductoEncontrado;
+        }
+
+        public void ModificarProducto(Producto producto)
+        {
+            Producto productoPorActualizar;
+            productoPorActualizar = ObtenerProductoPorId(producto.Cod_producto);
+            productoPorActualizar.Nombre = producto.Nombre;
+            productoPorActualizar.Detalle = producto.Detalle;
+            productoPorActualizar.Precio = producto.Precio;
+            productoPorActualizar.Cod_categoria = producto.Cod_categoria;
+            productoPorActualizar.Cantidad = producto.Cantidad;
+            ContextoBaseDeDatos.Producto.Update(productoPorActualizar);
+            ContextoBaseDeDatos.SaveChanges();
+        }
+
+
+        public Inventario disminuirCantidad(int codProducto, int cantidad)
+        {
+            Inventario inventario = new Inventario();
+            inventario = (from i in ContextoBaseDeDatos.Inventario
+                          where i.Cod_producto == codProducto
+                          select i).FirstOrDefault();
+            inventario.Cantidad -= cantidad;
+            ContextoBaseDeDatos.Inventario.Update(inventario);
+            ContextoBaseDeDatos.SaveChanges();
+
+           return inventario;
+        }
+
+        public Inventario aumentarCantidad(int codProducto, int cantidad)
+        {
+            Inventario inventario = new Inventario();
+            inventario = (from i in ContextoBaseDeDatos.Inventario
+                          where i.Cod_producto == codProducto
+                          select i).FirstOrDefault();
+            inventario.Cantidad += cantidad;
+            ContextoBaseDeDatos.Inventario.Update(inventario);
+            ContextoBaseDeDatos.SaveChanges();
+
+            return inventario;
         }
     }
 }

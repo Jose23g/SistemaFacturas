@@ -1,4 +1,5 @@
-﻿using SistemasFacturas.Models;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using SistemasFacturas.Models;
 using System.Collections.Generic;
 
 namespace SistemaFacturas.BL
@@ -8,8 +9,11 @@ namespace SistemaFacturas.BL
         List<Producto> ListaDeProductos();
         List<Categorias> ListaDeCategoria();
         void AgregarProductos(Producto producto);
-        Producto ObtenerProducto(int ID);
+        Producto ObtenerProductoPorId(int ID);
         void ModificarProducto(Producto producto);
         public List<Producto> BuscarProducto(string nombre);
+
+        Inventario disminuirCantidad(int codProducto, int cantidad);
+        Inventario aumentarCantidad(int codProducto, int cantidad);
     }
 }

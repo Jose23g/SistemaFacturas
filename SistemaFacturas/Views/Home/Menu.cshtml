@@ -11,7 +11,8 @@
                     <img src="https://image.freepik.com/vector-gratis/recibo-electronico-o-factura_126283-208.jpg" class="img-fluid rounded thumbnail" alt="Responsive image">
                     <br /><br />
                     <div class="caption">
-                       <button type="button" class="btn btn-info btn-lg">Factura</button>
+                       
+                        <a asp-action="Facturar" asp-controller="Factura" class="btn btn-primary">Facturas</a>
                     </div>
                 </div>
             </div>
@@ -36,11 +37,9 @@
                     <br />
                     <br />
                     <div class="caption">
-                        @Html.ActionLink("Inventario", "Inventario", new { @class = "btn btn-success" })
+                        <a asp-action="Inventario" asp-controller="Home" class="btn btn-primary">Facturas</a>
                     </div>
-                </div>
-
-               
+                </div>   
             </div>
         </div>
     </div>
