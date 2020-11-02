@@ -17,14 +17,22 @@ namespace SistemaFacturas.BL
             ContextoBaseDeDatos = contexto;
         }
 
-        public void AgregarFactura(Facturar facturar, List<string> codigos)
+        public void AgregarFactura(Facturar facturar)
         {
-            Factura factura = new Factura();
-            Producto producto = new Producto();
-            Detalle detalle = new Detalle();
-
-            facturar.Factura = factura;
+            Factura nuevaFactura = facturar.Factura;
+            ContextoBaseDeDatos.Factura.Add(nuevaFactura);
+            ContextoBaseDeDatos.SaveChanges();
             
+            AgregarDetalles(facturar.Detalle, nuevaFactura.Cod_factura);
+        }
+       public void AgregarDetalles(List<Detalle>detalles, int codFactura)
+        {
+            foreach (var item in detalles)
+            {
+                item.Cod_Factura = codFactura;
+                ContextoBaseDeDatos.Detalle.Add(item);   
+            }
+            ContextoBaseDeDatos.SaveChanges();
         }
 
         public List<MedotoPago> MetodoPagos()
@@ -62,6 +70,7 @@ namespace SistemaFacturas.BL
                     if (item.Nombre.Equals(dato_bus))
                     {
                         item.Cantidad = Disponible(item.Cod_producto, cantidad);
+                        item.CantidadSelecionada = cantidad;
                     }
                 }
                

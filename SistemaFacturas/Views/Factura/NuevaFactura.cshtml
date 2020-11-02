@@ -16,7 +16,7 @@
     </div>
     <div class="col-auto">
         <button class="btn btn-secondary" type="button"
-                data-target="#modalProducto" data-toggle="modal"
+                data-target="#ModeloProducto" data-toggle="modal"
                 data-backdrop="static" data-keyboard="false">
             <span class="glyphicon glyphicon-user"> Agregar Producto</span>
         </button>
@@ -30,9 +30,9 @@
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Factura.NombreComercial" class="control-label"></label>
-                <input asp-for="Factura.NombreComercial" class="form-control" value="Facturacion RESEB" readonly />
-                <span asp-validation-for="Factura.NombreComercial" class="text-danger"></span>
+                <label asp-for="Factura.NombreComersial" class="control-label"></label>
+                <input asp-for="Factura.NombreComersial" class="form-control" value="Facturacion RESEB" readonly />
+                <span asp-validation-for="Factura.NombreComersial" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -60,10 +60,10 @@
 
             <div class="form-group">
                 <label asp-for="Factura.Monto_total" class="control-label"></label>
-                <input asp-for="Factura.Monto_total" class="form-control" id="total"/>
+                <input asp-for="Factura.Monto_total" class="form-control" id="total" />
                 <span asp-validation-for="Factura.Monto_total" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group">
                 <label asp-for="Factura.Subtotal" class="control-label"></label>
                 <input asp-for="Factura.Subtotal" class="form-control" />
@@ -100,8 +100,33 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="tabla_atr"></tbody>
+                <tbody>
+                    @foreach (var item in Model.producto)
+                    {
+                        <tr class="Search">
+                            <td>
+                                @item.Nombre
+                            </td>
+                            <td>
+                                @item.Detalle
+                            </td>
+                            <td>
+                                @item.Precio
+                            </td>
+                            <td>
+                                @item.Cod_categoria
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Cod_producto">Editar</a> |
+                                <a asp-action="Details" asp-route-id="@item.Cod_producto">Detalles</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Cod_producto">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
             </table>
+
         </div>
     </div>
     <div class="form-group">
@@ -115,8 +140,7 @@
     <a asp-action="Index">Regresar</a>
 </div>
 
-@Html.Partial("_ModalProductos")
-
+<partial name="_ModeloProducto" />
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

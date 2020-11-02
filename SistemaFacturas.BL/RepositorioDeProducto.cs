@@ -20,9 +20,11 @@ namespace SistemaFacturas.BL
             ContextoBaseDeDatos.SaveChanges();
         }
 
-        public void DetalleDeProducto(int ID)
+        public Producto ObtenerProducto(int ID)
         {
-            throw new NotImplementedException();
+            var producto = ContextoBaseDeDatos.Producto.Find(ID);
+            return producto;
+           
         }
 
         public List<Categorias> ListaDeCategoria()
@@ -51,6 +53,48 @@ namespace SistemaFacturas.BL
             var producto = new List<Producto>();
             producto = ContextoBaseDeDatos.Producto.Where(x => x.Nombre.Contains(nombre)).ToList();
             return producto;
+        }
+
+
+        public Inventario aumentarCantidad(int codProducto, int cantidad)
+        {
+            Inventario inventario = new Inventario();
+            
+            inventario = (from i in ContextoBaseDeDatos.Inventario
+                          where i.Cod_producto == codProducto
+                          select i).FirstOrDefault();
+            
+            if(inventario.Cantidad != 0)
+            {
+                inventario.Cantidad += cantidad;
+                ContextoBaseDeDatos.Inventario.Update(inventario);
+                ContextoBaseDeDatos.SaveChanges();
+            }
+
+            return inventario;
+        }
+        public Inventario disminuirCantidad(int codProducto, int cantidad)
+        {
+            Inventario inventario = new Inventario();
+            inventario = (from i in ContextoBaseDeDatos.Inventario
+                          where i.Cod_producto == codProducto
+                          select i).FirstOrDefault();
+            try
+            {
+                if (inventario.Cantidad != 0)
+                {
+                    inventario.Cantidad -= cantidad;
+                    ContextoBaseDeDatos.Inventario.Update(inventario);
+                    ContextoBaseDeDatos.SaveChanges();
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+            
+
+            return inventario;
         }
     }
 }

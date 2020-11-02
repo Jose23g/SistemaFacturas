@@ -5,16 +5,25 @@
                 <h4 class="modal-title">Lista de Productos</h4>
             </div>
             <div class="modal-body ">
-                <div style="text-align: right" class="form-inline">
-                    <div class="form-group">
-                        <input type="text" style="text-align: right" placeholder="Ingresar nombre Para Buscar" class="form-control" id="dato_bus" />
-                        <input type="number" class="form-control" id="cantidad" name="cantidad"/>
+                <div class="form-group">
+                    <div class="row justify-content-end">
+                        <div class="col-4">
+                            <input type="text" placeholder="Ingresar nombre Para Buscar" class="form-control" id="dato_bus" />
+                        </div>
+                        <div class="col-2">
+                            <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad"/>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-primary" onclick="Buscar()"><span class="glyphicon glyphicon-search"> Buscar</span></button>
+                        </div>
                     </div>
-                    <button type="button" class="btn btn-primary" onclick="bus_atr()"><span class="glyphicon glyphicon-search"> Buscar</span></button>
+                </div>
+                <div style="text-align: right" class="form-inline">
+
                 </div>
                 <br />
-                <table class="table table-bordered">
-                    <thead style="background-color: darkblue; color:white">
+                <table class="table">
+                    <thead class="thead-dark">
                         <tr>
                             <th>cod</th>
                             <th>Nombre</th>
@@ -46,16 +55,156 @@
             });
     };
 
-    function buscar() {
+    Buscar = function () {
         $.get('/Factura/buscar', {
             dato_bus: $('#dato_bus').val(),
             cantidad: $('#cantidad').val()
-        }
-           
-        )
-        
+        }, function (res) {
+                
+        }).then(function (JsonResult) {
+            
+            //console.log(JsonResult);
+            let tabla;
+            let boton_bor;
+
+            for (var i = 0; i < JsonResult.length; i++) {
+                
+                if (JsonResult[i].cantidad >= JsonResult[i].cantidadSelecionada) {
+
+                    boton_bor = "<button class=\"btn btn-warning\" type='button'"
+                        + " onclick=\"agregrar('" + JsonResult[i].cod_producto + "','" + JsonResult[i].nombre + "','" + JsonResult[i].detalle + "','" + JsonResult[i].precio + "','" + JsonResult[i].cantidad + "','" + JsonResult[i].cantidadSelecionada + "')\""
+                        + " data-dismiss='modal'><span class=\"glyphicon glyphicon-check\"> Añadir</span></button>";
+
+                    tabla +=
+                        '<tr><td>' + JsonResult[i].cod_producto + '</td>'
+                        + '<td>' + JsonResult[i].nombre + '</td>'
+                        + '<td>' + JsonResult[i].detalle + '</td>'
+                        + "<td>" + JsonResult[i].precio + '</td>'
+                        + '<td>' + JsonResult[i].cantidad + '</td>'
+                        + '<td>' + boton_bor + '</td></tr>';
+
+                }
+                else
+                {
+                    boton_bor = "<button class=\"btn btn-success\" type='button'"
+                        + " data-dismiss='modal'><span class=\"glyphicon glyphicon-check\"> Cantidad no disponible</span></button>";
+
+                    tabla +=
+                        '<tr><td>' + JsonResult[i].cod_producto + '</td>'
+                        + '<td>' + JsonResult[i].nombre + '</td>'
+                        + '<td>' + JsonResult[i].detalle + '</td>'
+                        + "<td>" + JsonResult[i].precio + '</td>'
+                        + '<td>' + JsonResult[i].cantidad + '</td>'
+                        + '<td>' + boton_bor + '</td></tr>';
+                }
+
+               
+            }
+            $('#tabla_bus_atr').html(tabla);
+        });
     }
 
+    agregrar = function (codProducto, nombreProducto, detalleProducto, precioProducto, cantidad, cantidadSelecionada) {
+        $.post(
+            '/Factura/agregar', {
+            codProducto: codProducto,
+            nombreProducto: nombreProducto,
+            detalleProducto: detalleProducto,
+            precioProducto: precioProducto,
+            cantidad: cantidad,
+            cantidadSelecionada: cantidadSelecionada
+        }, function (res) {
+                
+
+                var productos = res;
+                var total = 0;
+                var subtotal = 0;
+                var IVA = 13;
+               
+                console.log(productos);
+              
+                let tablas;
+               
+                for (var i = 0; i < productos.length; i++) {
+                    boton_bor = "<button class=\"btn btn-danger\" type='button'"
+                        + " onclick=\"borrar('" + productos[i].cod_producto + "','" + productos[i].cantidadSelecionada+"')\""
+                        + "><span class=\"glyphicon glyphicon-trash\"> Borrar</span></button>";
+
+                    tablas += '<tr><td>' + productos[i].cod_producto + '</td>'
+                        + '<td>' + productos[i].nombre + '</td>'
+                        + '<td>' + productos[i].detalle + '</td>'
+                        + '<td>' + productos[i].precio + '</td>'
+                        + '<td>' + productos[i].cantidadSelecionada + '</td>'
+                        + '<td>' + boton_bor + '</td></tr>'
+
+
+                    var precio = productos[i].precio;
+                    var cantidad = productos[i].cantidadSelecionada;
+                    var sub = precio * cantidad;
+                    
+                    subtotal = subtotal + sub;    
+                    impuestos = (subtotal * IVA) / 100;
+                    total = subtotal + impuestos;
+                   
+                }
+                console.log(total);
+
+                $('#tabla_atr').html(tablas);
+                $('#total').attr("value",total);
+                $('#subtotal').attr("value", subtotal);
+               
+                
+        });
+    };
+
+    borrar = function (id, cantidad) {
+        $.post(
+            '/Factura/borrar', {
+                id: id,
+                cantidad:cantidad
+        }, function (res) {
+
+                var productos = res;
+                var total = 0;
+                var subtotal = 0;
+                var IVA = 13;
+
+                console.log(productos);
+
+                let tablas;
+
+                for (var i = 0; i < productos.length; i++) {
+                    boton_bor = "<button class=\"btn btn-danger\" type='button'"
+                        + " onclick=\"borrar('" + productos[i].cod_producto + "','" + productos[i].cantidadSelecionada + "')\""
+                        + "><span class=\"glyphicon glyphicon-trash\"> Borrar</span></button>";
+
+                    tablas += '<tr><td>' + productos[i].cod_producto + '</td>'
+                        + '<td>' + productos[i].nombre + '</td>'
+                        + '<td>' + productos[i].detalle + '</td>'
+                        + '<td>' + productos[i].precio + '</td>'
+                        + '<td>' + productos[i].cantidadSelecionada + '</td>'
+                        + '<td>' + boton_bor + '</td></tr>'
+
+
+                    var precio = productos[i].precio;
+                    var cantidad = productos[i].cantidadSelecionada;
+                    var sub = precio * cantidad;
+
+                    subtotal = subtotal + sub;
+                    impuestos = (subtotal * IVA) / 100;
+                    total = subtotal + impuestos;
+
+                }
+                console.log(total);
+
+                $('#tabla_atr').html(tablas);
+                $('#total').attr("value", total);
+                $('#subtotal').attr("value", subtotal);
+
+        });
+    };
+
+ 
     agr_atr = function (codProducto, nombreProducto, detalleProducto, precioProducto, Cantidad) {
         $.post(
             '/Factura/agr_atr', {
@@ -68,36 +217,9 @@
                 $('#tabla_atr').html(res);
                 $('#tabla_bus_atr').html('');
                 $('#dato_bus').val('');
+               
             });
     };
-
-    function agregar(){
-        fetch("@Url.Content("/Factura/Obtener")")
-            .then(function (res) {
-                return res.json();
-            })
-            .then(function (JsonResult) {
-                console.log(JsonResult);
-                let boton_bor;
-                let tabla;
-
-                for (var i = 0; i < JsonResult.length; i++) {
-
-                    boton_bor = "<button class=\"btn btn-danger\" type='button'"
-                        + " onclick=\"bor_atr('" + JsonResult[i].codProducto + "')\""
-                        + "><span class=\"glyphicon glyphicon-trash\"> Borrar</span></button>"; 
-
-                    tabla += "<tr><td>" + JsonResult[i].codProducto + "</td>"
-                        + "<td>" + JsonResult[i].nombreProducto + "</td>"
-                        + "<td>" + JsonResult[i].detalleProducto + "</td>"
-                        + "<td>" + JsonResult[i].precioProducto + "</td>"
-                        + "<td>" + JsonResult[i].Cantidad + "</td>"
-                        + "<td>" + boton_bor + "</td></tr>"
-                    
-                }
-                document.getElementById(tabla_atr).innerHTML = tabla;
-            })
-    }
 
     bor_atr = function (id) {
         $.post(

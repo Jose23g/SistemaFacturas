@@ -14,5 +14,8 @@ namespace SistemasFacturas.Models
 
         [NotMapped]
         public int Cantidad { get; set; }
+        
+        [NotMapped]
+        public int CantidadSelecionada { get; set; }
     }
 }

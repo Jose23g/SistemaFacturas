@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Newtonsoft.Json;
 using SistemaFacturas.BL;
 using SistemaFacturas.DA;
 using SistemasFacturas.Models;
@@ -21,6 +23,9 @@ namespace SistemaFacturas.Controllers
         UserManager<IdentityUser> _userManager;
         List<Producto> productos = new List<Producto>();
 
+       private static List<Producto> listaProductos = new List<Producto>();
+       private static List<Detalle> listaDetalle = new List<Detalle>();
+
         public FacturaController(IRepositorioFactura repositorio, UserManager<IdentityUser> userManager, IRepositorioDeProductos repositorioDeProductos, ApplicationDbContext context)
         {
             repositorioFactura = repositorio;
@@ -35,19 +40,39 @@ namespace SistemaFacturas.Controllers
 
             ViewData["tipoPago"] = repositorioFactura.MetodoPagos();
             ViewBag.Productos = await contexto.Producto.Select(x=> new {x.Cod_producto, x.Nombre}).ToListAsync();
-            
-            Tuple<Factura, Detalle> model = new Tuple<Factura, Detalle>(new Factura(), new Detalle());
+
+            Facturar model = new Facturar();
             ViewData["lisProducto"] = productos;
            
             return View(model);
         }
 
        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Facturar(Facturar facturar)
+        {
+            try
+            {
+                facturar.producto = listaProductos;
+                facturar.Detalle = listaDetalle;
+                repositorioFactura.AgregarFactura(facturar);
+                return RedirectToAction(nameof(Facturar));
+            }
+            catch(Exception ex)
+            {
+                return View();
+            }
+        }
+
+
         // GET: HomeController1/Create
         public ActionResult NuevaFactura()
         {
-            ViewData["tipoPago"] = repositorioFactura.MetodoPagos();
             Facturar facturar = new Facturar();
+            List<Producto> listaProductos = new List<Producto>();
+            ViewData["tipoPago"] = repositorioFactura.MetodoPagos();           
+            facturar.producto = listaProductos;
             return View(facturar);
         }
 
@@ -58,7 +83,7 @@ namespace SistemaFacturas.Controllers
         {
             try
             {
-                repositorioFactura.AgregarFactura(facturar, l_indices);
+                repositorioFactura.AgregarFactura(facturar);
                 return RedirectToAction(nameof(NuevaFactura));
             }
             catch
@@ -84,10 +109,8 @@ namespace SistemaFacturas.Controllers
         {
             var producto = new List<Producto>();
             producto = repositorioFactura.bus_atr(dato_bus, cantidad);
-
             return Json(producto);
         }
-
 
         //--------busqueda de alumno
         [HttpPost]
@@ -140,7 +163,83 @@ namespace SistemaFacturas.Controllers
             }
             return res;
         }
+       
+        public JsonResult agregar(string codProducto, string nombreProducto, string detalleProducto, string precioProducto, int cantidad, int cantidadSelecionada)
+        {
+            Detalle detalle = new Detalle();
+            Producto producto = repositorioDeProductos1.ObtenerProducto(int.Parse(codProducto));
+            
+            producto.CantidadSelecionada = cantidadSelecionada;
+            detalle.Cod_producto = int.Parse(codProducto);
+            detalle.Cantidad = cantidad;
+           
+            if(listaProductos.Count == 0) 
+            {
+                producto.Cantidad = repositorioDeProductos1.disminuirCantidad(int.Parse(codProducto), cantidadSelecionada).Cantidad; 
+                listaDetalle.Add(detalle);
+                listaProductos.Add(producto);
+
+            }
+            else
+            {
+                foreach (Producto item in listaProductos)
+                {
+                    if (item.Cod_producto == int.Parse(codProducto))
+                    {
+                        item.CantidadSelecionada += 1;
+                        item.Cantidad = repositorioDeProductos1.disminuirCantidad(int.Parse(codProducto), cantidadSelecionada).Cantidad;
+
+                        foreach (var item2 in listaDetalle)
+                        {
+                            if (item2.Cod_producto == item.Cod_producto)
+                            {
+                                item2.Cantidad += 1;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        if(item.Cod_producto == listaProductos.Last().Cod_producto)
+                        {
+                            listaDetalle.Insert(0, detalle);
+                            listaProductos.Insert(0,producto);
+                            item.Cantidad = repositorioDeProductos1.disminuirCantidad(int.Parse(codProducto), cantidadSelecionada).Cantidad;
+                            break;
+                        }
+                       
+                    }
+                    
+                }
+            }
+            
+            return Json(listaProductos);
+        }
         
+        public JsonResult borrar(int id, int cantidad)
+        {
+            for (int i = 0; i < listaProductos.Count; i++)
+            {
+                if (listaProductos[i].Cod_producto == id)
+                {
+                    listaProductos.RemoveAt(i);
+                    repositorioDeProductos1.aumentarCantidad(id, cantidad);
+
+                }
+            }
+
+            for (int j = 0; j < listaDetalle.Count; j++)
+            {
+                if (listaDetalle[j].Cod_producto == id)
+                {
+                    listaDetalle.RemoveAt(j);  
+                }
+            }
+         
+            return Json(listaProductos);
+        }
+
         //------------Agregar Alumno 
         public String agr_atr(string codProducto, string nombreProducto, string detalleProducto, string precioProducto, int Cantidad)
         {

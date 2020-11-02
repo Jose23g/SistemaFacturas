@@ -12,7 +12,7 @@ namespace SistemasFacturas.Models
         public int Cod_factura { get; set; }     
         public DateTime FechaEmision { get; set; }
         [Required]
-        public string NombreComercial { get; set; }
+        public string NombreComersial { get; set; }
         public int Identificacion { get; set; }     
         public int Cod_metodo { get; set; }
         public string NumeroFactura { get; set; }

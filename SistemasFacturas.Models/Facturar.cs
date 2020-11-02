@@ -7,7 +7,7 @@ namespace SistemasFacturas.Models
         public Factura Factura { get; set; }
 
         public List<Detalle> Detalle { get; set; }
-
+        public List<Producto> producto { get; set; }
         
     }
 }

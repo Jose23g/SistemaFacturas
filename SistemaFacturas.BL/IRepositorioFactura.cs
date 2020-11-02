@@ -7,7 +7,8 @@ namespace SistemaFacturas.BL
 {
     public interface IRepositorioFactura
     {
-        void AgregarFactura(Facturar facturar, List<string> codigos);
+        void AgregarFactura(Facturar facturar);
+        void AgregarDetalles(List<Detalle> detalles, int codFactura);
         List<MedotoPago> MetodoPagos();
         void obtenerUsuario(UserManager<IdentityUser> userManager);
         void setEncabezado(Factura factura);
