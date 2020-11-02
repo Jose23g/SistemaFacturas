@@ -171,33 +171,39 @@
 
                 console.log(productos);
 
-                let tablas;
+                let tabla;
 
-                for (var i = 0; i < productos.length; i++) {
-                    boton_bor = "<button class=\"btn btn-danger\" type='button'"
-                        + " onclick=\"borrar('" + productos[i].cod_producto + "','" + productos[i].cantidadSelecionada + "')\""
-                        + "><span class=\"glyphicon glyphicon-trash\"> Borrar</span></button>";
+                if (productos.length == 0) {
 
-                    tablas += '<tr><td>' + productos[i].cod_producto + '</td>'
-                        + '<td>' + productos[i].nombre + '</td>'
-                        + '<td>' + productos[i].detalle + '</td>'
-                        + '<td>' + productos[i].precio + '</td>'
-                        + '<td>' + productos[i].cantidadSelecionada + '</td>'
-                        + '<td>' + boton_bor + '</td></tr>'
+                    tabla = '';
+
+                } else {
+                    for (var i = 0; i < productos.length; i++) {
+                        boton_bor = "<button class=\"btn btn-danger\" type='button'"
+                            + " onclick=\"borrar('" + productos[i].cod_producto + "','" + productos[i].cantidadSelecionada + "')\""
+                            + "><span class=\"glyphicon glyphicon-trash\"> Borrar</span></button>";
+
+                        tabla += '<tr><td>' + productos[i].cod_producto + '</td>'
+                            + '<td>' + productos[i].nombre + '</td>'
+                            + '<td>' + productos[i].detalle + '</td>'
+                            + '<td>' + productos[i].precio + '</td>'
+                            + '<td>' + productos[i].cantidadSelecionada + '</td>'
+                            + '<td>' + boton_bor + '</td></tr>'
 
 
-                    var precio = productos[i].precio;
-                    var cantidad = productos[i].cantidadSelecionada;
-                    var sub = precio * cantidad;
+                        var precio = productos[i].precio;
+                        var cantidad = productos[i].cantidadSelecionada;
+                        var sub = precio * cantidad;
 
-                    subtotal = subtotal + sub;
-                    impuestos = (subtotal * IVA) / 100;
-                    total = subtotal + impuestos;
+                        subtotal = subtotal + sub;
+                        impuestos = (subtotal * IVA) / 100;
+                        total = subtotal + impuestos;
 
+                    }
+                    console.log(total);
                 }
-                console.log(total);
 
-                $('#tabla_atr').html(tablas);
+                $('#tabla_atr').html(tabla);
                 $('#total').attr("value", total);
                 $('#subtotal').attr("value", subtotal);
 

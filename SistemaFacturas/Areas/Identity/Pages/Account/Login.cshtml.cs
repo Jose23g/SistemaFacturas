@@ -87,7 +87,7 @@ namespace SistemaFacturas.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        return RedirectToAction("MenuEncargado", "Home");
+                        return RedirectToAction("Menu", "Home");
                     }
                 }
                 if (result.RequiresTwoFactor)
