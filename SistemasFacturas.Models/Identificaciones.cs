@@ -2,10 +2,12 @@
 
 namespace SistemasFacturas.Models
 {
-    class Identificacion
+    public class Identificaciones
     {
         public int Tipo { get; set; }
         [Key]
-        public string Identificacion1 { get; set; }
+        public string Identificacion { get; set; }
+
+       
     }
 }

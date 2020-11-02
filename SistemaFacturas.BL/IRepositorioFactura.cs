@@ -10,6 +10,7 @@ namespace SistemaFacturas.BL
         void AgregarFactura(Facturar facturar);
         void AgregarDetalles(List<Detalle> detalles, int codFactura);
         List<MedotoPago> MetodoPagos();
+        List<Identificaciones> TipoIdentificacion();
         void obtenerUsuario(UserManager<IdentityUser> userManager);
         void setEncabezado(Factura factura);
         public List<Producto> bus_atr(string dato_bus, int cantidad);

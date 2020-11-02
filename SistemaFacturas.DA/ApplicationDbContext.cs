@@ -13,6 +13,7 @@ namespace SistemaFacturas.DA
         public DbSet<Inventario> Inventario { get; set; }
         public DbSet<Categorias> Categoria { get; set; }
         public DbSet<MedotoPago> MetodoPago { get; set; }
+        public DbSet<Identificaciones> Identificaciones { get; set; }
         public DbSet<Detalle> Detalle { get; set; }
         public DbSet<Usuarios> Usuarios { get; set; }
 

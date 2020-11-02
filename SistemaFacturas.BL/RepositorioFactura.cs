@@ -124,5 +124,14 @@ namespace SistemaFacturas.BL
         {
             return ContextoBaseDeDatos.Producto.Find(int.Parse(CodProducto));
         }
+
+        public List<Identificaciones> TipoIdentificacion()
+        {
+            
+                List<Identificaciones> listaIdentifaciones;
+                listaIdentifaciones = ContextoBaseDeDatos.Identificaciones.ToList();
+                return listaIdentifaciones;
+            
+        }
     }
 }

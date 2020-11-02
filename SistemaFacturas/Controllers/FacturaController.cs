@@ -97,10 +97,14 @@ namespace SistemaFacturas.Controllers
             listaClientes = repositorioFactura.ListaClientes();
             return View(listaClientes);
         }
+       
         public ActionResult NuevoCliente()
         {
-           
-            return View();
+            
+                ViewData["tipoIdentificacion"] = repositorioFactura.TipoIdentificacion();
+                return View();
+            
+
         }
 
 
@@ -125,7 +129,9 @@ namespace SistemaFacturas.Controllers
             ViewData["tipoPago"] = repositorioFactura.MetodoPagos();
             return View();
         }
+       
 
+            
 
         private static List<string> l_indices = new List<string>();
         private static List<Detalle> detalles = new List<Detalle>();
