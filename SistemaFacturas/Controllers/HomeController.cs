@@ -42,7 +42,37 @@ namespace SistemaFacturas.Controllers
             try
             {
                 repositorioDeProductos.AgregarProductos(producto);
-                return RedirectToAction(nameof(Menu));
+                return RedirectToAction(nameof(Inventario));
+            }
+            catch(Exception ex)
+            {
+                return View();
+            }
+        }
+
+        public ActionResult ModificarProducto(int id)
+        {
+            Producto productoPorEditar;
+            productoPorEditar = repositorioDeProductos.ObtenerProductoPorId(id);
+            return View(productoPorEditar);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ModificarProducto (Producto producto)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    repositorioDeProductos.ModificarProducto(producto);
+                    return RedirectToAction(nameof(Inventario));
+                }
+                else
+                {
+                    return View();
+                }
             }
             catch
             {
@@ -50,7 +80,7 @@ namespace SistemaFacturas.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles ="Administrador")]
         public IActionResult Menu()
         {
             return View();

@@ -11,7 +11,5 @@ namespace SistemaFacturas.BL
         Producto ObtenerProducto(int ID);
         void ModificarProducto(Producto producto);
         public List<Producto> BuscarProducto(string nombre);
-        Inventario aumentarCantidad(int codProducto, int cantidad);
-        Inventario disminuirCantidad(int codProducto, int cantidad);
     }
 }
