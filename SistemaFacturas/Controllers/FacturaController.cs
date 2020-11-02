@@ -91,7 +91,28 @@ namespace SistemaFacturas.Controllers
                 return View();
             }
         }
+        public ActionResult ListaClientes()
+        {
+            List<Persona> listaClientes;
+            listaClientes = repositorioFactura.ListaClientes();
+            return View(listaClientes);
+        }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AgregarCliente(Persona cliente)
+        {
+            try
+            {
+                repositorioFactura.AgregarCliente(cliente);
+                return RedirectToAction(nameof(ListaClientes));
+            }
+            catch
+            {
+                return View();
+            }
+        }
         // GET: HomeController1/Create
         public ActionResult Lista()
         {

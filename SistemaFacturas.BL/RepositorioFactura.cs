@@ -42,6 +42,21 @@ namespace SistemaFacturas.BL
             return listaMetodos;
         }
 
+        public void AgregarCliente(Persona persona)
+        {
+
+            ContextoBaseDeDatos.Persona.Add(persona);
+            ContextoBaseDeDatos.SaveChanges();
+
+        }
+
+        public List<Persona> ListaClientes()
+        {
+            List<Persona> listaclientes;
+            listaclientes = ContextoBaseDeDatos.Persona.ToList();
+            return listaclientes;
+        }
+
         public void obtenerUsuario(UserManager<IdentityUser> userManager)
         {
 
