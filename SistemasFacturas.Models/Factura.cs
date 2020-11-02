@@ -16,12 +16,13 @@ namespace SistemasFacturas.Models
         public int Identificacion { get; set; }     
         public int Cod_metodo { get; set; }
         public string NumeroFactura { get; set; }
-        public double Subtotal { get; set; }
-        public double Monto_total { get; set; }
-        public double MontoDescuento { get; set; }
-        public double Impuesto { get; set; }
+        public decimal Subtotal { get; set; }
+        public decimal Monto_total { get; set; }
+        public decimal MontoDescuento { get; set; }
+        public int Impuesto { get; set; }
         public int Descuento { get; set; }
-
+        public int Consecutivo { get; set; }
+        public int Clave { get; set; }
 
     }
 }

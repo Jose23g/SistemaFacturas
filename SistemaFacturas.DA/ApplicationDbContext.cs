@@ -15,6 +15,7 @@ namespace SistemaFacturas.DA
         public DbSet<MedotoPago> MetodoPago { get; set; }
         public DbSet<Detalle> Detalle { get; set; }
         public DbSet<Usuarios> Usuarios { get; set; }
+        public DbSet<Reporte> Reporte { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

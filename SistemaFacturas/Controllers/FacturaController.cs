@@ -43,7 +43,8 @@ namespace SistemaFacturas.Controllers
 
             Facturar model = new Facturar();
             ViewData["lisProducto"] = productos;
-           
+            listaDetalle.Clear();
+            listaProductos.Clear();
             return View(model);
         }
 
@@ -57,6 +58,7 @@ namespace SistemaFacturas.Controllers
                 facturar.producto = listaProductos;
                 facturar.Detalle = listaDetalle;
                 repositorioFactura.AgregarFactura(facturar);
+               
                 return RedirectToAction(nameof(Facturar));
             }
             catch(Exception ex)
@@ -171,7 +173,7 @@ namespace SistemaFacturas.Controllers
             
             producto.CantidadSelecionada = cantidadSelecionada;
             detalle.Cod_producto = int.Parse(codProducto);
-            detalle.Cantidad = cantidad;
+            detalle.Cantidad = cantidadSelecionada;
            
             if(listaProductos.Count == 0) 
             {
