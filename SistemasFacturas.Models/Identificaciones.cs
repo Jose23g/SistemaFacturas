@@ -8,6 +8,6 @@ namespace SistemasFacturas.Models
         [Key]
         public string Identificacion { get; set; }
 
-       
+
     }
 }

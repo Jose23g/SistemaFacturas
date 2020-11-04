@@ -70,7 +70,7 @@ namespace SistemaFacturas.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-            
+
             ViewData["Roles"] = _roleManager.Roles.ToList();
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();

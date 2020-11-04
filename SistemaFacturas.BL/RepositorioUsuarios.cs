@@ -1,6 +1,5 @@
 ﻿using SistemaFacturas.DA;
 using SistemasFacturas.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +15,7 @@ namespace SistemaFacturas.BL
         }
 
         public IEnumerable<Usuarios> GetUsuarios()
-           
+
         {
 
             var resultado = (from user in ElContextoDeBaseDeDatos.Users
@@ -32,6 +31,6 @@ namespace SistemaFacturas.BL
             return resultado;//resultado;
         }
 
-     
+
     }
 }

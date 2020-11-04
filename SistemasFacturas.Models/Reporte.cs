@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemasFacturas.Models
 {
@@ -9,7 +8,7 @@ namespace SistemasFacturas.Models
         [Key]
         public int CodReporte { get; set; }
         public DateTime FechaInicio { get; set; }
-        public int Cod_factura { get; set; } 
+        public int Cod_factura { get; set; }
         public DateTime FechaCierre { get; set; }
         public decimal TotalCierre { get; set; }
     }

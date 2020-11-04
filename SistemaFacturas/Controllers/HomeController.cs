@@ -45,7 +45,7 @@ namespace SistemaFacturas.Controllers
                 repositorioDeProductos.AgregarProductos(producto);
                 return RedirectToAction(nameof(Inventario));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return View();
             }
@@ -61,7 +61,7 @@ namespace SistemaFacturas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ModificarProducto (Producto producto)
+        public ActionResult ModificarProducto(Producto producto)
         {
             try
             {
@@ -81,12 +81,12 @@ namespace SistemaFacturas.Controllers
             }
         }
 
-        [Authorize(Roles ="Administrador")]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Menu()
         {
             return View();
         }
-        
+
         public IActionResult MenuEncargado()
         {
             return View();

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,11 +8,14 @@ namespace SistemasFacturas.Models
     {
 
         [Key]
-        public int Cod_factura { get; set; }     
+        public int Cod_factura { get; set; }
         public DateTime FechaEmision { get; set; }
         [Required]
         public string NombreComersial { get; set; }
-        public int Identificacion { get; set; }     
+        public int Identificacion { get; set; }
+
+        [NotMapped]
+        public string Nombre { get; set; }
         public int Cod_metodo { get; set; }
         public string NumeroFactura { get; set; }
         public decimal Subtotal { get; set; }

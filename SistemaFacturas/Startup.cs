@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SistemaFacturas.BL;
 using SistemaFacturas.DA;
-using SistemaFacturas.Data;
 
 namespace SistemaFacturas
 {
@@ -28,7 +27,7 @@ namespace SistemaFacturas
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                  .AddRoles<IdentityRole>()
                  .AddEntityFrameworkStores<ApplicationDbContext>();
-           
+
             services.AddScoped<IRepositorioDeProductos, RepositorioDeProducto>();
             services.AddScoped<IRepositorioFactura, RepositorioFactura>();
             services.AddScoped<IRepositorioUsuarios, RepositorioUsuarios>();

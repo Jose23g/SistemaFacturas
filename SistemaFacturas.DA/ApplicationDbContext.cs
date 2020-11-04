@@ -6,6 +6,10 @@ namespace SistemaFacturas.DA
 {
     public class ApplicationDbContext : IdentityDbContext
     {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+           : base(options)
+        {
+        }
 
         public DbSet<Persona> Persona { get; set; }
         public DbSet<Factura> Factura { get; set; }
@@ -18,9 +22,6 @@ namespace SistemaFacturas.DA
         public DbSet<Usuarios> Usuarios { get; set; }
         public DbSet<Reporte> Reporte { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+       
     }
 }

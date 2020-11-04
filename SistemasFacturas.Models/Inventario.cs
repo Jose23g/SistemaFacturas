@@ -6,7 +6,7 @@ namespace SistemasFacturas.Models
     {
         [Key]
         public int Cod_inventario { get; set; }
-        
+
         public int Cod_producto { get; set; }
         public int Cantidad { get; set; }
     }

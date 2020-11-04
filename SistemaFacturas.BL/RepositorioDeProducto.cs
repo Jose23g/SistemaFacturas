@@ -1,6 +1,5 @@
 ﻿using SistemaFacturas.DA;
 using SistemasFacturas.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,8 +25,8 @@ namespace SistemaFacturas.BL
 
             AgregarInventario(nuevoproducto.Cod_producto, nuevoproducto.Cantidad);
         }
-     public void AgregarInventario(int codP, int cantidad)
-            {
+        public void AgregarInventario(int codP, int cantidad)
+        {
             Inventario inventario = new Inventario();
             inventario.Cod_producto = codP;
             inventario.Cantidad = cantidad;
@@ -39,7 +38,7 @@ namespace SistemaFacturas.BL
         {
             var producto = ContextoBaseDeDatos.Producto.Find(ID);
             return producto;
-           
+
         }
 
         public List<Categorias> ListaDeCategoria()
@@ -58,8 +57,8 @@ namespace SistemaFacturas.BL
             List<Producto> listaProducto;
             listaProducto = ContextoBaseDeDatos.Producto.ToList();
 
-           foreach (var item in listaProducto)
-            { 
+            foreach (var item in listaProducto)
+            {
                 foreach (var inventario in Listainventarios)
                 {
                     if (item.Cod_producto == inventario.Cod_producto)
@@ -73,7 +72,7 @@ namespace SistemaFacturas.BL
             return listaProducto;
         }
 
-       public List<Producto> BuscarProducto(string nombre)
+        public List<Producto> BuscarProducto(string nombre)
         {
             var producto = new List<Producto>();
             producto = ContextoBaseDeDatos.Producto.Where(x => x.Nombre.Contains(nombre)).ToList();
@@ -111,7 +110,7 @@ namespace SistemaFacturas.BL
             ContextoBaseDeDatos.Inventario.Update(inventario);
             ContextoBaseDeDatos.SaveChanges();
 
-           return inventario;
+            return inventario;
         }
 
         public Inventario aumentarCantidad(int codProducto, int cantidad)

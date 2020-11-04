@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SistemaFacturas.BL;
 using SistemasFacturas.Models;
+using System;
+using System.Collections.Generic;
 
 namespace SistemaFacturas.Controllers
 {
@@ -30,10 +27,10 @@ namespace SistemaFacturas.Controllers
             {
                 return View();
             }
-           
+
         }
 
-       
+
         public ActionResult index()
         {
             List<Factura> listaFacturas = repositorioFactura.facturas();

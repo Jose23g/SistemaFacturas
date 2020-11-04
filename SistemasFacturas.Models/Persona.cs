@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SistemasFacturas.Models
 {
@@ -9,7 +8,7 @@ namespace SistemasFacturas.Models
         public int Identificacion { get; set; }
         [Display(Name = "Tipo  de identificación"), Required]
         public int Tipo { get; set; }
-     
+
         [Display(Name = "Nombre"), Required]
         public string Nombre { get; set; }
         [Display(Name = "Apellido"), Required]
@@ -22,7 +21,7 @@ namespace SistemasFacturas.Models
         public string Telefono { get; set; }
 
         [Display(Name = "País"), Required]
-        public string Pais  { get; set; }
+        public string Pais { get; set; }
 
         [Display(Name = "Provincia"), Required]
         public string Provincia { get; set; }
@@ -33,7 +32,7 @@ namespace SistemasFacturas.Models
         [Display(Name = "Distrito"), Required]
         public string Distrito { get; set; }
 
-       
+
 
     }
 }

@@ -2,7 +2,7 @@
 
 namespace SistemasFacturas.Models
 {
-    class Distrito
+    public class Distrito
     {
         [Key]
         public int Id_pais { get; set; }

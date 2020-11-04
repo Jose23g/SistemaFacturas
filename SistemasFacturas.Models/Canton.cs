@@ -2,7 +2,7 @@
 
 namespace SistemasFacturas.Models
 {
-    class Canton
+    public class Canton
     {
         [Key]
         public int Id_pais { get; set; }

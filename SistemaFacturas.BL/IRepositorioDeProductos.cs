@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
-using SistemasFacturas.Models;
+﻿using SistemasFacturas.Models;
 using System.Collections.Generic;
 
 namespace SistemaFacturas.BL

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SistemaFacturas.BL;
 
@@ -10,7 +6,7 @@ namespace SistemaFacturas.Controllers
 {
     public class UsersController : Controller
     {
- 
+
         private readonly IRepositorioUsuarios repositorioUsuarios;
 
         public UsersController(IRepositorioUsuarios repositorio)

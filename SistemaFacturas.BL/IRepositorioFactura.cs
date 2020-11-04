@@ -16,7 +16,10 @@ namespace SistemaFacturas.BL
         public List<Producto> bus_atr(string dato_bus, int cantidad);
         public int Disponible(int codProducto, int cantidad);
         public Producto producto(string CodProducto);
-        void AgregarCliente(Persona persona);
+        bool AgregarCliente(Persona persona);
+
+        Persona buscarPersona(int persona);
+
         public List<Persona> ListaClientes();
 
         void XML(Facturar facturar);

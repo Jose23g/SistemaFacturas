@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace SistemaFacturas.BL
 {
@@ -25,6 +26,7 @@ namespace SistemaFacturas.BL
 
             AgregarDetalles(facturar.Detalle, nuevaFactura.Cod_factura);
             reporte(facturar.Factura);
+            XML(facturar);
 
         }
         public void AgregarDetalles(List<Detalle> detalles, int codFactura)
@@ -43,8 +45,8 @@ namespace SistemaFacturas.BL
             nuevoReporte.Cod_factura = nuevaFactura.Cod_factura;
             nuevoReporte.FechaInicio = nuevaFactura.FechaEmision;
             nuevoReporte.TotalCierre = nuevaFactura.Subtotal;
-            
-           
+
+
             var resultado = (from c in ContextoBaseDeDatos.Reporte
                              where c.FechaInicio == nuevaFactura.FechaEmision
                              select c).FirstOrDefault();
@@ -70,24 +72,52 @@ namespace SistemaFacturas.BL
 
         public List<Reporte> reportes()
         {
-        
+
             List<Reporte> listaReporte = ContextoBaseDeDatos.Reporte.ToList();
-           
+
             return listaReporte;
         }
 
         public void XML(Facturar facturar)
         {
-            XmlDocument documento = new XmlDocument();
-            XmlNode root = documento.CreateElement("FacturaElectronica");
-            documento.AppendChild(root);
 
-            XmlNode contactNode = documento.CreateElement("Consecutivo");
-            contactNode.InnerText = "000011000";
-            root.AppendChild(contactNode);
 
-            documento.Save("JOSEFACURA.xml");
+            XDocument doc = new XDocument(
+                new XDeclaration("1.0", "gb2312", string.Empty),
+                new XElement("FacturaElectronica",
+                    new XElement("Consecutivo", "0000000"),
+                    new XElement("Clave", "00000000"),
+                    new XElement("FechaEmision", facturar.Factura.FechaEmision.ToString()),
+                    new XElement("Emisor",
+                        new XElement("Nombre", "Un Nombre random"),
+                        new XElement("Identificacion",
+                            new XElement("Tipo", "01"),
+                            new XElement("Numero", "1234567890"),
+                            new XElement("NombreComercial", facturar.Factura.NombreComersial)
+                            )),
+                    new XElement("Reseptor",
+                    new XElement("Nombre", "**INGRESAR NOMBRE PERSONA**"),
+                    new XElement("Identificacion",
+                        new XElement("Tipo", "**PONER TIPO**"),
+                        new XElement("Numero", "**PONER Numero**")),
+                    new XElement("Telefono", "**INGRESAR TELEFONO PERSONA**")),
+                    new XElement("CondicionVenta", "**PONER CONDICION DE VENTA**"),
+                    new XElement("MedioPago", facturar.Factura.Cod_metodo.ToString()),
+                    new XElement("Impuesto", "13"),
+                    new XElement("Total", facturar.Factura.Monto_total.ToString()),
+                    new XElement("SubTotal", facturar.Factura.Subtotal.ToString()),
+                    new XElement("DetalleServicio", facturar.producto.Select(producto =>
+                        new XElement("Producto",
+                                new XElement("NombreProducto", producto.Nombre),
+                                new XElement("Detalle", producto.Nombre),
+                                new XElement("PrecioUnitario", producto.Precio),
+                                new XElement("Cantidad", producto.CantidadSelecionada),
+                                new XElement("Subtotal", "**AGREGAR UN SUBTOTAL**"))))));
 
+
+
+
+            doc.Save(@"C:\Users\adria\Desktop\Analisis Proyecto\PRueva.xml");
 
         }
 
@@ -98,12 +128,27 @@ namespace SistemaFacturas.BL
             return listaMetodos;
         }
 
-        public void AgregarCliente(Persona persona)
+        public bool AgregarCliente(Persona persona)
         {
+            try
+            {
+                ContextoBaseDeDatos.Persona.Add(persona);
+                ContextoBaseDeDatos.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
 
-            ContextoBaseDeDatos.Persona.Add(persona);
-            ContextoBaseDeDatos.SaveChanges();
+                return false;
+            }
+           
 
+        }
+
+        public Persona buscarPersona(int id)
+        {
+            Persona persona = ContextoBaseDeDatos.Persona.Find(id);
+            return persona;
         }
 
         public List<Persona> ListaClientes()
@@ -183,11 +228,11 @@ namespace SistemaFacturas.BL
 
         public List<Identificaciones> TipoIdentificacion()
         {
-            
-                List<Identificaciones> listaIdentifaciones;
-                listaIdentifaciones = ContextoBaseDeDatos.Identificaciones.ToList();
-                return listaIdentifaciones;
-            
+
+            List<Identificaciones> listaIdentifaciones;
+            listaIdentifaciones = ContextoBaseDeDatos.Identificaciones.ToList();
+            return listaIdentifaciones;
+
         }
     }
 }
