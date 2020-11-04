@@ -117,7 +117,7 @@ namespace SistemaFacturas.BL
 
 
 
-            doc.Save(@"C:\Users\adria\Desktop\Analisis Proyecto\PRueva.xml");
+            doc.Save(@"C:\Users\Kryssia Pizarro\Desktop\CarpetaXML\Jositolindo");
 
         }
 
