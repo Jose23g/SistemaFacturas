@@ -26,5 +26,12 @@ namespace SistemaFacturas.BL
         void reporte(Factura nuevaFactura);
         List<Reporte> reportes();
         List<Factura> facturas();
+        List<Provincia> provincias(string idProvincia);
+        List<Canton> cantones(string idCanton);
+        List<Distrito> distritos(string IdDistrito);
+        List<Pais> listaPais();
+        List<Provincia> listaProvincia();
+        List<Canton> listaCanton();
+        List<Distrito> listaDistito();
     }
 }

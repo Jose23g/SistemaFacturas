@@ -17,7 +17,10 @@ namespace SistemaFacturas.BL
         {
             ContextoBaseDeDatos = contexto;
         }
+        public RepositorioFactura()
+        {
 
+        }
         public void AgregarFactura(Facturar facturar)
         {
             Factura nuevaFactura = facturar.Factura;
@@ -136,7 +139,7 @@ namespace SistemaFacturas.BL
                 ContextoBaseDeDatos.SaveChanges();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 return false;
@@ -233,6 +236,54 @@ namespace SistemaFacturas.BL
             listaIdentifaciones = ContextoBaseDeDatos.Identificaciones.ToList();
             return listaIdentifaciones;
 
+        }
+
+        public List<Provincia> provincias(string IdPais)
+        {
+            List<Provincia> provincias = (from p in ContextoBaseDeDatos.Provincia
+                                          where p.Id_pais == int.Parse(IdPais)
+                                          select p).ToList();
+
+            return provincias;
+        }
+
+        public List<Canton> cantones(String IdProvincia)
+        {
+            List<Canton> Canton = (from p in ContextoBaseDeDatos.Canton
+                                          where p.Id_provincia == int.Parse(IdProvincia)
+                                          select p).ToList();
+
+            return Canton;
+        }
+
+        public List<Distrito> distritos(String IdCanton)
+        {
+            List<Distrito> distritos = (from p in ContextoBaseDeDatos.Distrito
+                                   where p.Id_canton == int.Parse(IdCanton)
+                                   select p).ToList();
+
+            return distritos;
+        }
+
+       public List<Pais> listaPais()
+        {
+           
+            return ContextoBaseDeDatos.Pais.ToList();
+        }
+
+        public List<Provincia> listaProvincia()
+        {
+            return ContextoBaseDeDatos.Provincia.ToList();
+        }
+
+        public List<Canton> listaCanton()
+        {
+            return ContextoBaseDeDatos.Canton.ToList();
+        }
+
+        public List<Distrito> listaDistito()
+        {
+            return ContextoBaseDeDatos.Distrito.ToList();
         }
     }
 }

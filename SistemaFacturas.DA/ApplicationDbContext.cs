@@ -21,7 +21,11 @@ namespace SistemaFacturas.DA
         public DbSet<Detalle> Detalle { get; set; }
         public DbSet<Usuarios> Usuarios { get; set; }
         public DbSet<Reporte> Reporte { get; set; }
+        public DbSet<Provincia> Provincia { get; set; }
+        public DbSet<Canton> Canton { get; set; }
+        public DbSet<Distrito> Distrito { get; set; }
+        public DbSet<Pais>  Pais { get; set; }
 
-       
+
     }
 }

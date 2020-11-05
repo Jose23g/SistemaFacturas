@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SistemaFacturas.BL;
 using SistemaFacturas.DA;
@@ -49,7 +50,7 @@ namespace SistemaFacturas.Controllers
             factura.Identificacion = persona.Identificacion;
             factura.Nombre = persona.Nombre + " " + persona.Apellido1;
             factura.FechaEmision = DateTime.Today;
-
+            
             model.Factura = factura;
 
             ViewData["lisProducto"] = productos;
@@ -118,6 +119,10 @@ namespace SistemaFacturas.Controllers
         {
 
             ViewData["tipoIdentificacion"] = repositorioFactura.TipoIdentificacion();
+            ViewBag.Pais = repositorioFactura.listaPais();
+            ViewBag.Provincia = repositorioFactura.listaProvincia();
+            ViewBag.Canton = repositorioFactura.listaCanton();
+            ViewBag.Distrito = repositorioFactura.listaDistito();
             return View();
 
         }
@@ -226,6 +231,30 @@ namespace SistemaFacturas.Controllers
 
             return Json(listaProductos);
         }
-    }
-}
 
+        public JsonResult RecargarProvincia(string Id_provincia)
+        {
+            List<Provincia> provincias = repositorioFactura.provincias(Id_provincia);
+            ViewBag.Provincias = new SelectList(provincias, "Id_pais", "Id_provincia", "Nombre_provincia");
+
+            return Json(provincias);
+        }
+
+        public JsonResult RecargarCanton(string Id_Canton)
+        {
+            List<Canton> cantones = repositorioFactura.cantones(Id_Canton);
+            ViewBag.Cantones = new SelectList(cantones, "Id_pais", "Id_provincia", "Id_canton", "Nombre_canton");
+
+            return Json(cantones);
+        }
+        public JsonResult RecargarDistrito(string Id_Distrito)
+        {
+            List<Distrito> distritos = repositorioFactura.distritos(Id_Distrito);
+            ViewBag.Cantones = new SelectList(distritos, "Id_provincia", "Id_canton", "Id_distrito", "Nombre_distrito");
+
+            return Json(distritos);
+        }
+    }
+
+   
+}

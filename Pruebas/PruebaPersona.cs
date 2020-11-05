@@ -14,24 +14,29 @@ namespace Pruebas
     {
 
         [TestMethod]
-        public void AnadirUnaPersona()
+        public void Buscar_Un_Cliente_Registrado()
         {
-            RepositorioFactura repositorio = new RepositorioFactura();
-            Persona persona = new Persona();
-            persona.Nombre = "Jose";
-            persona.Apellido1 = "Garcia";
-            persona.Identificacion = 504220984;
-            persona.Nombre = "Costa Rica";
-            persona.Provincia = "Guanacaste";
-            persona.Canton = "Carrillo";
-            persona.Distrito = "Sarinal";
+            //Arrange 
+            Persona persona2 = new Persona() { Identificacion = 504220984, Nombre = "Jorge", Apellido1 = "Lopez", Pais = 1, Provincia = 1, Canton = 1, Distrito = 1, Correo = "miguel@gmail.com", Telefono = "88294975", Tipo = 1 };
+            var RepositorioFactura_Falso = new MockRepositorioFactura();
+            //Act
+            Persona resultado = RepositorioFactura_Falso.buscarPersona(persona2.Identificacion);
 
-            bool resultado = true;
-            bool actual = repositorio.AgregarCliente(persona);
+            //Assert
+            Assert.AreEqual(persona2.Identificacion, resultado.Identificacion);
+        }
 
-            Assert.AreEqual(resultado, actual);
-          
-           // Assert.AreEqual(resultado);
+        [TestMethod]
+        public void Obtener_Toda_La_Lista_De_Clientes()
+        {
+            //Arrange 
+            Persona persona2 = new Persona() { Identificacion = 504220984, Nombre = "Jorge", Apellido1 = "Lopez", Pais = 1, Provincia = 1, Canton = 1, Distrito = 1, Correo = "miguel@gmail.com", Telefono = "88294975", Tipo = 1 };
+            var RepositorioFactura_Falso = new MockRepositorioFactura();
+            //Act
+            Persona resultado = RepositorioFactura_Falso.buscarPersona(persona2.Identificacion);
+
+            //Assert
+            //Assert.pas
         }
     }
 }

@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SistemasFacturas.Models.Canton" Collapsed="true">
+    <Position X="0.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAEABAAA=</HashCode>
+      <FileName>Canton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Categorias" Collapsed="true">
+    <Position X="2.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Categorias.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Detalle" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAACAiAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Detalle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Distrito" Collapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAABAAAAAECBAAA=</HashCode>
+      <FileName>Distrito.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Factura" Collapsed="true">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAkIAAAAAEAgAAAAgAgAAAAAAAQAAEQABCAAAAEAg=</HashCode>
+      <FileName>Factura.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Facturar" Collapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAABAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Facturar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Identificaciones" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Identificaciones.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Inventario" Collapsed="true">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAQAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Inventario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.MedotoPago" Collapsed="true">
+    <Position X="4" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>MetodoPago.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Pais" Collapsed="true">
+    <Position X="5.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgBAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pais.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Persona" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAQAAAAEAAQAgAAACIAAAAAAAAIAAgAAAAQ=</HashCode>
+      <FileName>Persona.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Producto" Collapsed="true">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAEAAAAAAAAAAAAAgAAQAAKAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Producto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Provincia" Collapsed="true">
+    <Position X="4" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAgAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Provincia.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Receptor" Collapsed="true">
+    <Position X="5.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgEAAAAAAA=</HashCode>
+      <FileName>Receptor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Reporte" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAggAAAAAAAAACAAAAIAg=</HashCode>
+      <FileName>Reporte.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Response" Collapsed="true">
+    <Position X="2.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAACA=</HashCode>
+      <FileName>Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Telefonos" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Telefono.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemasFacturas.Models.Usuarios" Collapsed="true">
+    <Position X="5.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAQAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Usuarios.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

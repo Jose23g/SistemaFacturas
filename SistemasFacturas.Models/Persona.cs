@@ -21,16 +21,16 @@ namespace SistemasFacturas.Models
         public string Telefono { get; set; }
 
         [Display(Name = "País"), Required]
-        public string Pais { get; set; }
+        public int Pais { get; set; }
 
         [Display(Name = "Provincia"), Required]
-        public string Provincia { get; set; }
+        public int Provincia { get; set; }
 
         [Display(Name = "Cantón"), Required]
-        public string Canton { get; set; }
+        public int Canton { get; set; }
 
         [Display(Name = "Distrito"), Required]
-        public string Distrito { get; set; }
+        public int Distrito { get; set; }
 
 
 

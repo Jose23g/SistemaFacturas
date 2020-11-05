@@ -4,7 +4,7 @@ namespace SistemasFacturas.Models
 {
     public class Provincia
     {
-        [Key]
+       
         public int Id_pais { get; set; }
         [Key]
         public int Id_provincia { get; set; }
