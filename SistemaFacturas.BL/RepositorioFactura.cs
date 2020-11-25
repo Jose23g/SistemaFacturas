@@ -23,7 +23,10 @@ namespace SistemaFacturas.BL
         }
         public void AgregarFactura(Facturar facturar)
         {
+           
             Factura nuevaFactura = facturar.Factura;
+            nuevaFactura.Impuesto = 13;
+            nuevaFactura.Clave = GenerarClave(nuevaFactura.Consecutivo);
             ContextoBaseDeDatos.Factura.Add(nuevaFactura);
             ContextoBaseDeDatos.SaveChanges();
 
@@ -32,6 +35,36 @@ namespace SistemaFacturas.BL
             XML(facturar);
 
         }
+
+        public String GenerarClave(String consecutivo)
+        {
+            try
+            {
+                return ("506" + DateTime.Now.ToString("ddMMyy") + "00" + "12345678910" + consecutivo + "1" + GenerarCodigoSeguridad());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        private String GenerarCodigoSeguridad()
+        {
+            Random GeneradorRandom = new Random();
+            String caracteres = "1234567890";
+            int longitud = caracteres.Length;
+            int largocodigo = 8;
+            char caracter;
+            String CodigoSeguridad = "";
+            for (int i = 0; i < largocodigo; i++)
+            {
+                caracter = caracteres[GeneradorRandom.Next(longitud)];
+                CodigoSeguridad += caracter.ToString();
+            }
+            return CodigoSeguridad;
+        }
+
         public void AgregarDetalles(List<Detalle> detalles, int codFactura)
         {
             foreach (var item in detalles)
@@ -44,27 +77,28 @@ namespace SistemaFacturas.BL
 
         public void reporte(Factura nuevaFactura)
         {
-            Reporte nuevoReporte = new Reporte();
-            nuevoReporte.Cod_factura = nuevaFactura.Cod_factura;
-            nuevoReporte.FechaInicio = nuevaFactura.FechaEmision;
-            nuevoReporte.TotalCierre = nuevaFactura.Subtotal;
-
-
-            var resultado = (from c in ContextoBaseDeDatos.Reporte
-                             where c.FechaInicio == nuevaFactura.FechaEmision
-                             select c).FirstOrDefault();
-
-            if (resultado != null)
+            Reporte nuevoReporte = new Reporte
             {
-                ContextoBaseDeDatos.Update(nuevoReporte);
-                ContextoBaseDeDatos.SaveChanges();
+                Cod_factura = nuevaFactura.Cod_factura,
+                FechaInicio = nuevaFactura.FechaEmision,
+                TotalCierre = nuevaFactura.Subtotal
+            };
+
+
+            Reporte reporte = ContextoBaseDeDatos.Reporte.Where(x => x.FechaInicio == nuevoReporte.FechaInicio).FirstOrDefault();
+
+            if (reporte != null)
+            {
+                reporte.TotalCierre += nuevoReporte.TotalCierre;
+                ContextoBaseDeDatos.Reporte.Update(reporte);
             }
             else
             {
                 ContextoBaseDeDatos.Add(nuevoReporte);
-                ContextoBaseDeDatos.SaveChanges();
             }
 
+            ContextoBaseDeDatos.SaveChanges();
+           
         }
 
         public List<Factura> facturas()
@@ -78,6 +112,8 @@ namespace SistemaFacturas.BL
 
             List<Reporte> listaReporte = ContextoBaseDeDatos.Reporte.ToList();
 
+            //Reporte reporte = listaReporte.Select;
+
             return listaReporte;
         }
 
@@ -88,25 +124,25 @@ namespace SistemaFacturas.BL
             XDocument doc = new XDocument(
                 new XDeclaration("1.0", "gb2312", string.Empty),
                 new XElement("FacturaElectronica",
-                    new XElement("Consecutivo", "0000000"),
-                    new XElement("Clave", "00000000"),
+                    new XElement("Consecutivo", facturar.Factura.Consecutivo),
+                    new XElement("Clave", facturar.Factura.Clave),
                     new XElement("FechaEmision", facturar.Factura.FechaEmision.ToString()),
                     new XElement("Emisor",
-                        new XElement("Nombre", "Un Nombre random"),
+                        new XElement("Nombre", facturar.Factura.NombreComersial),
                         new XElement("Identificacion",
                             new XElement("Tipo", "01"),
                             new XElement("Numero", "1234567890"),
                             new XElement("NombreComercial", facturar.Factura.NombreComersial)
                             )),
-                    new XElement("Reseptor",
-                    new XElement("Nombre", "**INGRESAR NOMBRE PERSONA**"),
+                    new XElement("Receptor",
+                    new XElement("Nombre", facturar.Persona.Nombre),
                     new XElement("Identificacion",
-                        new XElement("Tipo", "**PONER TIPO**"),
-                        new XElement("Numero", "**PONER Numero**")),
-                    new XElement("Telefono", "**INGRESAR TELEFONO PERSONA**")),
+                        new XElement("Tipo", facturar.Persona.Tipo),
+                        new XElement("Numero", facturar.Persona.Identificacion)),
+                    new XElement("Telefono", facturar.Persona.Telefono)),
                     new XElement("CondicionVenta", "**PONER CONDICION DE VENTA**"),
                     new XElement("MedioPago", facturar.Factura.Cod_metodo.ToString()),
-                    new XElement("Impuesto", "13"),
+                    new XElement("Impuesto", facturar.Factura.Impuesto),
                     new XElement("Total", facturar.Factura.Monto_total.ToString()),
                     new XElement("SubTotal", facturar.Factura.Subtotal.ToString()),
                     new XElement("DetalleServicio", facturar.producto.Select(producto =>
@@ -117,11 +153,28 @@ namespace SistemaFacturas.BL
                                 new XElement("Cantidad", producto.CantidadSelecionada),
                                 new XElement("Subtotal", "**AGREGAR UN SUBTOTAL**"))))));
 
+            doc.Save(@"C:\Users\adria\Desktop\file.xml");
 
+        }
 
-
-            doc.Save(@"C:\Users\Kryssia Pizarro\Desktop\CarpetaXML\Jositolindo");
-
+        public string Consecutivo()
+        {
+            string consecutivo = "0010000101";
+    
+            List<Factura> facturas = ContextoBaseDeDatos.Factura.ToList();
+            long cantidad = facturas.Count() + 1;
+            string consecutivoFactura = consecutivo;
+            string numerofactura = "";
+            if (cantidad < 999999999)
+            {
+                long faltante = (10 - cantidad.ToString().Length);
+                 numerofactura = cantidad.ToString();
+                for (int i = 0; i < faltante; i++)
+                {
+                    numerofactura = String.Concat(0.ToString(), numerofactura);
+                }
+            }
+            return consecutivoFactura + numerofactura;
         }
 
         public List<MedotoPago> MetodoPagos()
@@ -176,21 +229,20 @@ namespace SistemaFacturas.BL
         // Busqueda de Producto
         public List<Producto> bus_atr(string dato_bus, int cantidad)
         {
-            var autores = new List<Producto>();
+            var productos = new List<Producto>();
 
             try
             {
-                autores = (from c in ContextoBaseDeDatos.Producto
-                           where c.Nombre == dato_bus
+                productos = (from c in ContextoBaseDeDatos.Producto
+                           where c.Nombre.Contains(dato_bus)
                            select c).ToList();
 
-                foreach (var item in autores)
+                foreach (var item in productos)
                 {
-                    if (item.Nombre.Equals(dato_bus))
-                    {
+                    
                         item.Cantidad = Disponible(item.Cod_producto, cantidad);
                         item.CantidadSelecionada = cantidad;
-                    }
+                    
                 }
 
             }
@@ -198,7 +250,7 @@ namespace SistemaFacturas.BL
             {
                 throw;
             }
-            return autores;
+            return productos;
         }
         public int Disponible(int codProducto, int cantidadSolicitada)
         {
@@ -256,10 +308,10 @@ namespace SistemaFacturas.BL
             return Canton;
         }
 
-        public List<Distrito> distritos(String IdCanton)
+        public List<Distrito> distritos(String IdCanton, String IdProvincia)
         {
             List<Distrito> distritos = (from p in ContextoBaseDeDatos.Distrito
-                                   where p.Id_canton == int.Parse(IdCanton)
+                                   where p.Id_canton  == int.Parse(IdCanton) && p.Id_provincia == int.Parse(IdProvincia)
                                    select p).ToList();
 
             return distritos;
@@ -284,6 +336,15 @@ namespace SistemaFacturas.BL
         public List<Distrito> listaDistito()
         {
             return ContextoBaseDeDatos.Distrito.ToList();
+        }
+
+        public ModeloReportes DetalleReporte(DateTime fechas, int id )
+        {
+            ModeloReportes detalles = new ModeloReportes();
+            detalles.ListaFacturas = ContextoBaseDeDatos.Factura.Where(x => x.FechaEmision == fechas).ToList();
+            detalles.Reporte = ContextoBaseDeDatos.Reporte.Find(id);
+                
+            return detalles;
         }
     }
 }

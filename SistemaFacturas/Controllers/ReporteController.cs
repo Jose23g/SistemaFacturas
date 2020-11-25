@@ -37,5 +37,12 @@ namespace SistemaFacturas.Controllers
             return View(listaFacturas);
         }
 
+
+        public ActionResult Detalle(DateTime fecha, int id)
+        {
+            ModeloReportes reportes = repositorioFactura.DetalleReporte(fecha, id);
+            return View(reportes);
+        }
+
     }
 }

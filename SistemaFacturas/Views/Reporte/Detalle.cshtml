@@ -1,0 +1,103 @@
+﻿@model SistemasFacturas.Models.ModeloReportes
+
+@{
+    ViewData["Title"] = "Detalle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Detalle</h1>
+
+<div>
+    <h4>Reporte</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Reporte.FechaInicio)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Reporte.FechaInicio)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Reporte.FechaCierre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Reporte.FechaCierre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Reporte.TotalCierre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Reporte.TotalCierre)
+        </dd>
+    </dl>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Fecha de emisión 
+                </th>
+                <th>
+                    Nombre Comercial 
+                </th>
+                <th>
+                    Identificación
+                </th>
+                <th>
+                   Cod metodo pago
+                </th>
+                <th>
+                    Numero factura
+                </th>
+                <th>
+                    Subtotal
+                </th>
+                <th>
+                    Monto total
+                </th>             
+                <th>
+                    Impuesto
+                </th>
+                
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaFacturas)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaEmision)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreComersial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Identificacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cod_metodo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Consecutivo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subtotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Monto_total)
+                </td>             
+                <td>
+                    @Html.DisplayFor(modelItem => item.Impuesto)
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+<div>
+    
+    <a asp-action="Reportes">Regresar</a>
+</div>

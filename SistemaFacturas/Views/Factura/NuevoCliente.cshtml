@@ -66,14 +66,14 @@
                 <label asp-for="Canton" class="control-label"></label>
 
                 <!--  <input asp-for="Canton" class="form-control" /> -->
-                <select id="ListaProvincia" asp-for="Canton" class="form-control" asp-items='new SelectList(ViewBag.Canton,"Id_canton", "Nombre_canton")'></select>
+                <select id="ListaCanton" asp-for="Canton" class="form-control" asp-items='new SelectList(ViewBag.Canton,"Id_canton", "Nombre_canton")'></select>
                 <span asp-validation-for="Canton" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Distrito" class="control-label"></label>
 
                 <!-- <input asp-for="Distrito" class="form-control" /> -->
-                <select id="ListaProvincia" asp-for="Distrito" class="form-control" asp-items='new SelectList(ViewBag.Distrito,"Id_distrito", "Nombre_distrito")'></select>
+                <select id="ListaDistrito" asp-for="Distrito" class="form-control" asp-items='new SelectList(ViewBag.Distrito,"Id_distrito", "Nombre_distrito")'></select>
                 <span asp-validation-for="Distrito" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -87,6 +87,62 @@
     <a asp-action="ListaClientes">Atras</a>
 </div>
 
+<script>
+
+    var listaPais = document.getElementById("ListaPais");
+    var listaProvincias = document.getElementById("ListaProvincia");
+    var listaCanton = document.getElementById("ListaCanton");
+    var listaDistrito = document.getElementById("ListaDistrito");
+
+    listaProvincias.addEventListener("change", ObtenerCanton)
+    listaCanton.addEventListener("change", ObtenerDistrito)
+
+    function ObtenerCanton()
+    {
+        $.ajax
+            ({
+                type: "POST",
+                url: "/Factura/ObtenerCanton/",
+                data: { id: $("#ListaProvincia").val()},
+                dataType: "json",
+                success: function (response)
+                {
+                    console.log(response);
+                    var canton = response;
+                    let opcion = "";
+
+                    for (var i = 0; i < canton.length; i++) {
+                        opcion += "<option value=" + canton[i].id_canton + ">" + canton[i].nombre_canton + "</option>";
+                    }
+                    $("#ListaCanton").html(opcion);
+                }
+            })
+    }
+
+    function ObtenerDistrito() {
+        $.ajax
+            ({
+                type: "POST",
+                url: "/Factura/ObtenerDistrito/",
+                data:
+                {
+                    idCanton: $("#ListaCanton").val(),
+                    idProvincia: $("#ListaProvincia").val()
+                },
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    var distrito = response;
+                    let opcion = "";
+
+                    for (var i = 0; i < distrito.length; i++) {
+                        opcion += "<option value=" + distrito[i].id_distrito + ">" + distrito[i].nombre_distrito + "</option>";
+                    }
+                    $("#ListaDistrito").html(opcion);
+                }
+            })
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

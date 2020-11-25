@@ -39,24 +39,27 @@ namespace SistemaFacturas.Controllers
 
         public async Task<IActionResult> Facturar(int id)
         {
+                ViewData["tipoPago"] = repositorioFactura.MetodoPagos();
+                ViewBag.Productos = await contexto.Producto.Select(x => new { x.Cod_producto, x.Nombre }).ToListAsync();
 
-            ViewData["tipoPago"] = repositorioFactura.MetodoPagos();
-            ViewBag.Productos = await contexto.Producto.Select(x => new { x.Cod_producto, x.Nombre }).ToListAsync();
+                Facturar model = new Facturar();
+                Persona persona = repositorioFactura.buscarPersona(id);
+                Factura factura = new Factura();
 
-            Facturar model = new Facturar();
-            Persona persona = repositorioFactura.buscarPersona(id);
-            Factura factura = new Factura();
+                factura.Identificacion = persona.Identificacion;
+                factura.Nombre = persona.Nombre + " " + persona.Apellido1;
+                factura.Consecutivo = repositorioFactura.Consecutivo();
+                factura.FechaEmision = DateTime.Today;
 
-            factura.Identificacion = persona.Identificacion;
-            factura.Nombre = persona.Nombre + " " + persona.Apellido1;
-            factura.FechaEmision = DateTime.Today;
+                model.Factura = factura;
+
+                ViewData["lisProducto"] = productos;
+                listaDetalle.Clear();
+                listaProductos.Clear();
+
+                return View(model);
+  
             
-            model.Factura = factura;
-
-            ViewData["lisProducto"] = productos;
-            listaDetalle.Clear();
-            listaProductos.Clear();
-            return View(model);
         }
 
 
@@ -71,7 +74,7 @@ namespace SistemaFacturas.Controllers
                 facturar.Detalle = listaDetalle;
                 repositorioFactura.AgregarFactura(facturar);
 
-                return RedirectToAction(nameof(Facturar));
+                return RedirectToAction(nameof(ListaClientes));
             }
             catch (Exception ex)
             {
@@ -79,32 +82,6 @@ namespace SistemaFacturas.Controllers
             }
         }
 
-
-
-        public ActionResult NuevaFactura()
-        {
-            Facturar facturar = new Facturar();
-            List<Producto> listaProductos = new List<Producto>();
-            ViewData["tipoPago"] = repositorioFactura.MetodoPagos();
-            facturar.producto = listaProductos;
-            return View(facturar);
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult NuevaFactura(Facturar facturar)
-        {
-            try
-            {
-                repositorioFactura.AgregarFactura(facturar);
-                return RedirectToAction(nameof(NuevaFactura));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
 
         public ActionResult ListaClientes()
@@ -240,16 +217,17 @@ namespace SistemaFacturas.Controllers
             return Json(provincias);
         }
 
-        public JsonResult RecargarCanton(string Id_Canton)
+        [HttpPost]
+        public JsonResult ObtenerCanton(string id)
         {
-            List<Canton> cantones = repositorioFactura.cantones(Id_Canton);
+            List<Canton> cantones = repositorioFactura.cantones(id.ToString());
             ViewBag.Cantones = new SelectList(cantones, "Id_pais", "Id_provincia", "Id_canton", "Nombre_canton");
 
             return Json(cantones);
         }
-        public JsonResult RecargarDistrito(string Id_Distrito)
+        public JsonResult ObtenerDistrito(string idCanton, string idProvincia)
         {
-            List<Distrito> distritos = repositorioFactura.distritos(Id_Distrito);
+            List<Distrito> distritos = repositorioFactura.distritos(idCanton, idProvincia);
             ViewBag.Cantones = new SelectList(distritos, "Id_provincia", "Id_canton", "Id_distrito", "Nombre_distrito");
 
             return Json(distritos);

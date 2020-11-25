@@ -17,14 +17,16 @@ namespace SistemasFacturas.Models
         [NotMapped]
         public string Nombre { get; set; }
         public int Cod_metodo { get; set; }
-        public string NumeroFactura { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Monto_total { get; set; }
         public decimal MontoDescuento { get; set; }
         public int Impuesto { get; set; }
         public int Descuento { get; set; }
-        public int Consecutivo { get; set; }
-        public int Clave { get; set; }
+       
+        [Display(Name = "N Factura")]
+        public String Consecutivo { get; set; }
+       
+        public String Clave { get; set; }
 
     }
 }

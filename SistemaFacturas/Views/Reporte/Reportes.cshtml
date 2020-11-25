@@ -31,6 +31,10 @@
                 @Html.DisplayFor(modelItem => item.TotalCierre)
             </td>
            
+            <td>
+                
+                @Html.ActionLink("Detalles","Detalle", new { fecha= item.FechaInicio, id= item.CodReporte})
+            </td>
         </tr>
 }
     </tbody>

@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaFacturas.BL", "Siste
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaFacturas.DA", "SistemaFacturas.DA\SistemaFacturas.DA.csproj", "{5C29A4EB-8481-4FCE-A5F7-E25FCF40A670}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pruebas", "Pruebas\Pruebas.csproj", "{9E2BF5D4-1ACE-487D-B1E6-FFBF44399A7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pruebas", "Pruebas\Pruebas.csproj", "{9E2BF5D4-1ACE-487D-B1E6-FFBF44399A7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemasFacturas.MockPruebas", "SistemasFacturas.MockPruebas\SistemasFacturas.MockPruebas.csproj", "{8FDCCF89-1FFB-42F4-B4A1-7DC85C5DB394}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{9E2BF5D4-1ACE-487D-B1E6-FFBF44399A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E2BF5D4-1ACE-487D-B1E6-FFBF44399A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E2BF5D4-1ACE-487D-B1E6-FFBF44399A7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FDCCF89-1FFB-42F4-B4A1-7DC85C5DB394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FDCCF89-1FFB-42F4-B4A1-7DC85C5DB394}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FDCCF89-1FFB-42F4-B4A1-7DC85C5DB394}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FDCCF89-1FFB-42F4-B4A1-7DC85C5DB394}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

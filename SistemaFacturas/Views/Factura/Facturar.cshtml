@@ -18,6 +18,18 @@
             <input asp-for="Factura.Cod_factura" type="hidden" />
             <input asp-for="Factura.Identificacion" type="hidden" />
 
+            <input asp-for="Persona.Identificacion" type="hidden" />
+            <input asp-for="Persona.Nombre" type="hidden" />
+            <input asp-for="Persona.Apellido1" type="hidden" />
+            <input asp-for="Persona.Identificacion" type="hidden" />
+            <input asp-for="Persona.Pais" type="hidden" />
+            <input asp-for="Persona.Provincia" type="hidden" />
+            <input asp-for="Persona.Canton" type="hidden" />
+            <input asp-for="Persona.Distrito" type="hidden" />
+            <input asp-for="Persona.Correo" type="hidden" />
+            <input asp-for="Persona.Telefono" type="hidden" />
+            <input asp-for="Persona.Tipo" type="hidden" />
+
             <div class=" form-group col-md-4">
                 <label asp-for="Factura.NombreComersial"></label>
                 <input type="text" asp-for="Factura.NombreComersial" value="Empresa S.A" class="form-control">
@@ -25,14 +37,14 @@
             </div>
 
             <div class="form-group col-6 col-md-4">
-                <label asp-for="Factura.NumeroFactura"></label>
-                <input asp-for=Factura.NumeroFactura class="form-control" />
-                <span asp-validation-for="Factura.NumeroFactura"></span>
+                <label asp-for="Factura.Consecutivo"></label>
+                <input asp-for=Factura.Consecutivo class="form-control" readonly />
+                <span asp-validation-for="Factura.Consecutivo"></span>
             </div>
 
             <div class="form-group col-md-4">
                 <label asp-for="Factura.FechaEmision"></label>
-                <input asp-for="Factura.FechaEmision" class="form-control" readonly/>
+                <input asp-for="Factura.FechaEmision" class="form-control" readonly />
                 <span asp-validation-for="Factura.FechaEmision"></span>
             </div>
 
@@ -45,13 +57,8 @@
 
             <div class="form-group col-md-4">
                 <label asp-for="Factura.Cod_metodo"></label>
-                <select class="form-control" asp-for="Factura.Cod_metodo" asp-items='new SelectList(tipoDocu,"Cod_metodo", "Metodo_de_pago")'>
-                </select>
-            </div>
-
-            <div class="form-group col-md-4">
-                <label>Vendedor</label>
-                <input type="text" id="exampleForm" class="form-control">
+                <!--<input asp-for="Factura.Cod_metodo" class="form-control">-->
+                <select class="form-control" asp-for="Factura.Cod_metodo" asp-items='new SelectList(tipoDocu,"Cod_metodo", "Metodo_de_pago")'></select>
             </div>
 
         </div>
@@ -65,53 +72,68 @@
 
     </div>
     <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Codigo
-                </th>
-                <th>
-                    Nombre
-                </th>
-                <th>
-                    Detalle
-                </th>
-                <th>
-                    Precio
-                </th>
-                <th>
-                    Cantidad
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="tabla_atr">
-        </tbody>
-    </table>
-    <div class="row justify-content-between">
-        <div class="col-4">
-            <div class="col-md-auto align-content-end">
-                <div class="col-sm-10 col-md-10 col-lg-10 mx-auto">
-                    <div class="card card-signin my-5">
-                        <div class="card-body rounded border border-secondary">
-                            <label asp-for="Factura.Monto_total"></label>
-                            <input class="form-control" asp-for="Factura.Monto_total" readonly id="total">
-                            <br />
-                            <label asp-for="Factura.Subtotal"></label>
-                            <input asp-for="Factura.Subtotal" class="form-control" id="subtotal" readonly>
-                            <br />
-                            <h5 class="card-title text-center">Cambio</h5>
-                            <input type="text" id="exampleForm3" class="form-control">
+
+
+    <div class="container">
+        <div class="row justify-content-between" >
+            <table class="table col-8">
+                <thead>
+                    <tr>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Detalle
+                        </th>
+                        <th>
+                            Precio
+                        </th>
+                        <th>
+                            Cantidad
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="tabla_atr">
+                </tbody>
+            </table>
+
+            <div>
+                <div class="col-md-auto align-content-end">
+                    <div class="col-sm-10 col-md-10 col-lg-10 mx-auto">
+                        <div class="card card-signin my-5">
+                            <div class="card-body rounded border border-secondary">
+                                <label asp-for="Factura.Monto_total"></label>
+                                <input class="form-control" asp-for="Factura.Monto_total" readonly id="total">
+                                <br />
+                                <label asp-for="Factura.Subtotal"></label>
+                                <input asp-for="Factura.Subtotal" class="form-control" id="subtotal" readonly>
+                                <br />
+                                <h5 class="card-title text-center">Cambio</h5>
+                                <input type="text" id="exampleForm3" class="form-control">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
-    <div class="form-group">
-        <input type="submit" value="Facturar" class="btn btn-primary" />
+    
+
+
+
+    <div>
+        <div class="row justify-content-between">
+            <div class="form-group col-4">
+                <input type="submit" value="Facturar" class="btn btn-primary" />
+            </div>
+            <div class="col-4">
+                <a asp-controller="Home" asp-action="Menu" class="btn btn-info">Cancelar</a>
+            </div>
+        </div>
     </div>
+
 </form>
 
 <partial name="_ModalProductos" />

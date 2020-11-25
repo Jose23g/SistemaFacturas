@@ -1,14 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using SistemasFacturas.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
 
-namespace SistemaFacturas.BL
+namespace SistemaFacturas.MocksPruebas
 {
-   public class MockRepositorioFactura : IRepositorioFactura
+    public class MockRepositorioFactura : IRepositorioFactura
     {
         List<Factura> listaFactura = new List<Factura>();
         List<Persona> listaPersona = new List<Persona>();
@@ -20,7 +16,16 @@ namespace SistemaFacturas.BL
         
         public bool AgregarCliente(Persona persona)
         {
-            throw new NotImplementedException();
+            try
+            {
+                listaPersona.Add(persona);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
         }
 
         public void AgregarDetalles(List<Detalle> detalles, int codFactura)
@@ -42,11 +47,11 @@ namespace SistemaFacturas.BL
             throw new NotImplementedException();
         }
 
-        public Persona buscarPersona(int persona)
+        public Persona buscarPersona(int cedula)
         {
             listaPersona.Add(persona2);
             listaPersona.Add(persona1);
-            Persona per = listaPersona.FirstOrDefault(x => x.Identificacion == persona);
+            Persona per = listaPersona.FirstOrDefault(x => x.Identificacion == cedula);
             return per;
         }
 
@@ -60,12 +65,22 @@ namespace SistemaFacturas.BL
             throw new NotImplementedException();
         }
 
+        public string Consecutivo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ModeloReportes DetalleReporte(DateTime fechas, int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public int Disponible(int codProducto, int cantidad)
         {
             throw new NotImplementedException();
         }
 
-        public List<Distrito> distritos(string IdDistrito)
+        public List<Distrito> distritos(string IdDistrito, string IdProvincia)
         {
             throw new NotImplementedException();
         }

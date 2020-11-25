@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SistemaFacturas.BL\SistemaFacturas.BL.csproj" />
     <ProjectReference Include="..\SistemaFacturas.DA\SistemaFacturas.DA.csproj" />
+    <ProjectReference Include="..\SistemasFacturas.MockPruebas\SistemasFacturas.MockPruebas.csproj" />
     <ProjectReference Include="..\SistemasFacturas.Models\SistemasFacturas.Models.csproj" />
   </ItemGroup>
 
